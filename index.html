@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Three Moments Where AI Changes Everything — Aflac</title>
+<style>
+:root{
+  --ink:#0a0e1a;--ink2:#0e1424;--ink3:#141c30;--ink4:#18213a;
+  --line:#20293f;--line2:#2c3550;
+  --text:#eaf0fb;--muted:#8a97b4;--faint:#5b6883;
+  --build:#1b96ff;--build-soft:#58c4ff;--build-dim:rgba(27,150,255,.14);
+  --run:#38d39f;--run-soft:#5ef5c4;--run-dim:rgba(56,211,159,.14);
+  --improve:#a855f7;--improve-soft:#c084fc;--improve-dim:rgba(168,85,247,.14);
+  --danger:#e05050;--warn:#ffb454;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{background:var(--ink);color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+.bg{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;
+  background:radial-gradient(120% 90% at 80% 4%,rgba(27,150,255,.10),transparent 45%),
+    radial-gradient(120% 120% at 10% 104%,rgba(168,85,247,.10),transparent 52%),
+    radial-gradient(150% 120% at 50% 42%,#0d1428 0%,#0a0e1a 60%,#070a14 100%)}
+.bg::after{content:"";position:absolute;inset:0;background:radial-gradient(125% 95% at 50% 44%,transparent 52%,rgba(4,6,12,.6))}
+.glow{position:absolute;width:900px;height:900px;left:62%;top:24%;transform:translate(-50%,-50%);border-radius:50%;
+  background:radial-gradient(circle,rgba(27,150,255,.14),transparent 62%);filter:blur(26px);transition:transform 1.9s cubic-bezier(.3,.5,.16,1)}
+.slayer{position:absolute;left:-150%;top:-150%;width:400%;height:400%;transition:transform 1.9s cubic-bezier(.3,.5,.16,1);will-change:transform}
+.star{position:absolute;border-radius:50%;background:#dbe9ff;width:2px;height:2px;animation:tw var(--tw,7s) ease-in-out infinite;animation-delay:var(--td,0s)}
+.slayer.far .star{width:1.5px;height:1.5px;opacity:.4}
+.slayer.mid .star{width:2px;height:2px;opacity:.62}
+.slayer.near .star{width:3px;height:3px;opacity:.9;box-shadow:0 0 5px rgba(150,200,255,.55)}
+@keyframes tw{0%,100%{opacity:var(--o,.4)}50%{opacity:calc(var(--o,.4)*1.55)}}
+.stage{position:relative;z-index:2;height:100vh;width:100vw}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;
+  padding:4.5vh 5.5vw 5.5vh;opacity:0;transform:translateY(60px) scale(.99);
+  transition:opacity .6s ease,transform .8s cubic-bezier(.22,.61,.24,1);pointer-events:none;overflow:hidden}
+.slide.active{opacity:1;transform:none;pointer-events:auto}
+.slide.past{transform:translateY(-70px) scale(.99)}
+.kicker{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;
+  margin-bottom:18px;display:flex;align-items:center;gap:12px;color:var(--build-soft)}
+.kicker::before{content:"";width:32px;height:2px;background:var(--build);display:inline-block;flex-shrink:0}
+.kicker.rk{color:var(--run-soft)}.kicker.rk::before{background:var(--run)}
+.kicker.ik{color:var(--improve-soft)}.kicker.ik::before{background:var(--improve)}
+h1{font-size:clamp(40px,6.2vw,96px);line-height:1.0;font-weight:800;letter-spacing:-.025em}
+h2{font-size:clamp(28px,4.2vw,64px);line-height:1.06;font-weight:800;letter-spacing:-.02em;max-width:24ch}
+.lede{margin-top:18px;font-size:clamp(16px,1.8vw,24px);color:var(--muted);max-width:52ch;line-height:1.5}
+.eb{color:var(--build-soft)}.er{color:var(--run-soft)}.ei{color:var(--improve-soft)}
+.r{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s cubic-bezier(.2,.7,.2,1)}
+.active .r{opacity:1;transform:none}
+.active .r.d1{transition-delay:.10s}.active .r.d2{transition-delay:.20s}.active .r.d3{transition-delay:.30s}
+.active .r.d4{transition-delay:.40s}.active .r.d5{transition-delay:.50s}
+.two{display:grid;grid-template-columns:1.15fr 1fr;gap:4vw;align-items:center;flex:1;min-height:0}
+.ba-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.5vw;margin-top:2.5vh;flex:1;min-height:0}
+.ba-col{background:var(--ink3);border-radius:16px;padding:2.5vh 2vw;border:1px solid var(--line)}
+.ba-col.bc{border-top:3px solid var(--danger)}.ba-col.ac{border-top:3px solid var(--run)}
+.ba-lbl{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:10px}
+.ba-lbl.bl{color:var(--danger)}.ba-lbl.al{color:var(--run-soft)}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:2.5vw;margin-top:3.5vh;flex:1;min-height:0}
+.sc{background:var(--ink3);border:1px solid var(--line2);border-radius:20px;padding:3vh 2.5vw;
+  text-align:center;border-top:4px solid var(--build);display:flex;flex-direction:column;justify-content:center}
+.sc.rs{border-top-color:var(--run)}.sc.is{border-top-color:var(--improve)}
+.sn{font-size:clamp(28px,3.8vw,58px);font-weight:800;color:var(--build-soft);
+  line-height:1.1;margin-bottom:12px;font-family:var(--mono)}
+.sc.rs .sn{color:var(--run-soft)}.sc.is .sn{color:var(--improve-soft)}
+.sl{font-size:clamp(14px,1.35vw,17px);color:var(--muted);line-height:1.5}
+.storyboard{display:grid;grid-template-columns:repeat(3,1fr);gap:3vw;margin-top:3vh;flex:1;min-height:0}
+.sp{background:var(--ink3);border:1px solid var(--line2);border-radius:16px;
+  padding:3vh 2vw;display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px}
+.sp-num{font-family:var(--mono);font-size:11px;color:var(--run-soft);letter-spacing:.2em}
+.sp-cap{font-size:clamp(14px,1.4vw,17px);color:var(--muted);line-height:1.5}
+.hint{position:fixed;bottom:22px;left:28px;z-index:6;font-family:var(--mono);font-size:11px;
+  color:var(--faint);display:flex;gap:9px;align-items:center;opacity:.7}
+.key{border:1px solid var(--line);border-radius:5px;padding:2px 8px;color:var(--muted);background:var(--ink2)}
+button.key{cursor:pointer;font-family:var(--mono);font-size:11px;line-height:1;
+  transition:background .15s,color .15s}
+button.key:hover{background:var(--ink3);color:var(--text);border-color:var(--build)}
+body.presenting .hint{opacity:0;transition:opacity .3s}
+body.presenting .hint:hover{opacity:.7}
+.ico-exit{display:none}
+body.presenting .ico-enter{display:none}body.presenting .ico-exit{display:inline}
+.prog-dots{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);z-index:6;display:flex;gap:8px}
+.pdot{width:8px;height:8px;border-radius:50%;background:var(--line);transition:all .3s}
+.pdot.on{background:var(--build);width:22px;border-radius:4px}
+.pdot.seen{background:var(--faint)}
+</style>
+</head>
+<body>
+<div class="bg"><div class="glow" id="glow"></div>
+  <div class="slayer far" id="lfar"></div>
+  <div class="slayer mid" id="lmid"></div>
+  <div class="slayer near" id="lnear"></div>
+</div>
+<div class="stage" id="stage">
+
+<section class="slide" data-slide data-cam-x="0" data-cam-y="0">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:4vw;align-items:center;height:100%">
+    <div>
+      <div class="kicker r">Aflac · Policy Admin Program</div>
+      <h1 class="r d1">Three Moments<br>Where <span class="eb">AI Changes</span><br>Everything</h1>
+      <p class="lede r d2">Build It. Run It. Improve It.<br>Policy Admin as the proof point.</p>
+      <div class="r d3" style="margin-top:28px;font-family:var(--mono);color:var(--faint);font-size:13px">
+        Aflac IT Manager &nbsp;·&nbsp; Business Stakeholders
+      </div>
+    </div>
+    <div class="r d2" style="display:flex;align-items:center;justify-content:center;height:100%">
+      <svg width="100%" viewBox="0 0 420 440" style="max-height:82vh">
+        <rect x="8" y="30" width="116" height="158" rx="18" fill="var(--ink3)" stroke="#1b96ff" stroke-width="2.5" opacity=".95"/>
+        <text x="66" y="18" text-anchor="middle" font-family="ui-monospace,monospace" font-size="12" fill="#1b96ff" letter-spacing="4" font-weight="600">BUILD</text>
+        <g transform="translate(66,110)">
+          <circle cx="0" cy="0" r="30" stroke="#1b96ff" stroke-width="2.5" fill="none" opacity=".7"/>
+          <circle cx="0" cy="0" r="13" stroke="#1b96ff" stroke-width="2.5" fill="none" opacity=".7"/>
+          <g stroke="#1b96ff" stroke-width="4" stroke-linecap="round" opacity=".78">
+            <line x1="0" y1="-30" x2="0" y2="-38"/><line x1="0" y1="30" x2="0" y2="38"/>
+            <line x1="30" y1="0" x2="38" y2="0"/><line x1="-30" y1="0" x2="-38" y2="0"/>
+          </g>
+        </g>
+        <text x="66" y="178" text-anchor="middle" font-size="16" fill="#58c4ff" font-weight="800">Faster</text>
+        <rect x="152" y="30" width="116" height="158" rx="18" fill="var(--ink3)" stroke="#38d39f" stroke-width="2.5" opacity=".95"/>
+        <text x="210" y="18" text-anchor="middle" font-family="ui-monospace,monospace" font-size="12" fill="#38d39f" letter-spacing="4" font-weight="600">RUN</text>
+        <g transform="translate(210,92)">
+          <rect x="-32" y="-26" width="64" height="44" rx="8" stroke="#38d39f" stroke-width="2.5" fill="none" opacity=".8"/>
+          <rect x="-24" y="-18" width="18" height="9" rx="3" fill="#38d39f" opacity=".22"/>
+          <rect x="-24" y="-5" width="13" height="9" rx="3" fill="#38d39f" opacity=".2"/>
+          <rect x="-24" y="8" width="16" height="9" rx="3" fill="#38d39f" opacity=".18"/>
+        </g>
+        <text x="210" y="178" text-anchor="middle" font-size="16" fill="#5ef5c4" font-weight="800">Smarter</text>
+        <rect x="296" y="30" width="116" height="158" rx="18" fill="var(--ink3)" stroke="#a855f7" stroke-width="2.5" opacity=".95"/>
+        <text x="354" y="18" text-anchor="middle" font-family="ui-monospace,monospace" font-size="11" fill="#a855f7" letter-spacing="3" font-weight="600">IMPROVE</text>
+        <g transform="translate(354,110)">
+          <path d="M0,-32 A32,32 0 1,1 -2,-32" fill="none" stroke="#a855f7" stroke-width="3" opacity=".85"/>
+          <path d="M4,-40 L-5,-32 L4,-24" fill="#a855f7" opacity=".85"/>
+          <circle cx="0" cy="0" r="11" fill="none" stroke="#a855f7" stroke-width="2" opacity=".65"/>
+          <line x1="-7" y1="0" x2="7" y2="0" stroke="#a855f7" stroke-width="2.5" opacity=".65"/>
+          <line x1="0" y1="-7" x2="0" y2="7" stroke="#a855f7" stroke-width="2.5" opacity=".65"/>
+        </g>
+        <text x="354" y="178" text-anchor="middle" font-size="16" fill="#c084fc" font-weight="800">Continuously</text>
+        <path d="M120 120 L176 270" stroke="#1b96ff" stroke-width="2" stroke-dasharray="5 3" opacity=".5"/>
+        <path d="M210 192 L210 262" stroke="#38d39f" stroke-width="2" stroke-dasharray="5 3" opacity=".5"/>
+        <path d="M300 120 L244 270" stroke="#a855f7" stroke-width="2" stroke-dasharray="5 3" opacity=".5"/>
+        <g transform="translate(210,322)">
+          <path d="M-28,-22 C-28,-35 -15,-44 0,-41 C4,-52 18,-60 32,-54 C38,-64 56,-64 60,-50 C70,-50 76,-40 70,-30 C77,-26 76,-10 66,0 C66,10 58,18 44,18 C42,26 28,28 18,20 C14,30 -4,30 -8,20 C-18,26 -28,18 -30,4 C-38,0 -38,-16 -28,-22Z" fill="none" stroke="#1b96ff" stroke-width="2.5"/>
+          <text x="22" y="5" text-anchor="middle" font-size="14" fill="#eaf0fb" font-family="ui-monospace,monospace" font-weight="600" opacity=".8">Salesforce</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-slide data-cam-x="22" data-cam-y="-18">
+  <div class="kicker r">The Thesis</div>
+  <div class="r d1" style="font-size:clamp(22px,3.2vw,48px);font-weight:800;line-height:1.22;letter-spacing:-.025em;max-width:28ch">
+    AI shows up at <span class="eb">three moments</span> in every system's life —
+    while we <span class="eb">build</span> it,
+    while people <span class="er">use</span> it,
+    and while it keeps <span class="ei">getting better.</span>
+  </div>
+  <div class="r d2" style="margin-top:4vh;flex:1;min-height:0">
+    <svg width="100%" viewBox="0 0 960 200" style="height:100%;max-height:44vh">
+      <rect x="20" y="40" width="340" height="44" rx="8" fill="#1b96ff" opacity=".1"/>
+      <rect x="370" y="40" width="240" height="44" rx="8" fill="#38d39f" opacity=".1"/>
+      <rect x="620" y="40" width="236" height="44" rx="8" fill="#a855f7" opacity=".1"/>
+      <text x="190" y="26" text-anchor="middle" font-family="ui-monospace,monospace" font-size="13" fill="#58c4ff" letter-spacing="3" font-weight="600">PILLAR 1 · BUILD</text>
+      <text x="490" y="26" text-anchor="middle" font-family="ui-monospace,monospace" font-size="13" fill="#5ef5c4" letter-spacing="3" font-weight="600">PILLAR 2 · RUN</text>
+      <text x="738" y="26" text-anchor="middle" font-family="ui-monospace,monospace" font-size="13" fill="#c084fc" letter-spacing="3" font-weight="600">PILLAR 3 · IMPROVE</text>
+      <line x1="26" y1="62" x2="854" y2="62" stroke="#2c3550" stroke-width="2.5"/>
+      <path d="M850 55 L860 62 L850 69" fill="#2c3550"/>
+      <path d="M856 62 Q930 62 950 116 Q968 168 490 163 Q12 158 8 62 Q8 32 26 62" fill="none" stroke="#a855f7" stroke-width="2" stroke-dasharray="7 5" opacity=".4"/>
+      <circle cx="80" cy="62" r="11" fill="#1b96ff" opacity=".9"/>
+      <text x="80" y="98" text-anchor="middle" font-size="13" fill="#58c4ff" font-family="ui-monospace,monospace" font-weight="600">REQ</text>
+      <circle cx="200" cy="62" r="11" fill="#1b96ff" opacity=".82"/>
+      <text x="200" y="98" text-anchor="middle" font-size="13" fill="#58c4ff" font-family="ui-monospace,monospace" font-weight="600">DESIGN</text>
+      <circle cx="320" cy="62" r="11" fill="#1b96ff" opacity=".75"/>
+      <text x="320" y="98" text-anchor="middle" font-size="13" fill="#58c4ff" font-family="ui-monospace,monospace" font-weight="600">BUILD</text>
+      <circle cx="368" cy="62" r="18" fill="none" stroke="#eaf0fb" stroke-width="3"/>
+      <circle cx="368" cy="62" r="8" fill="#eaf0fb"/>
+      <text x="368" y="14" text-anchor="middle" font-size="12" fill="#eaf0fb" font-family="ui-monospace,monospace" font-weight="700" letter-spacing="1.5">GO-LIVE</text>
+      <line x1="368" y1="18" x2="368" y2="44" stroke="#eaf0fb" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <circle cx="490" cy="62" r="11" fill="#38d39f" opacity=".9"/>
+      <text x="490" y="98" text-anchor="middle" font-size="13" fill="#5ef5c4" font-family="ui-monospace,monospace" font-weight="600">DAILY USE</text>
+      <circle cx="610" cy="62" r="11" fill="#38d39f" opacity=".8"/>
+      <text x="610" y="98" text-anchor="middle" font-size="13" fill="#5ef5c4" font-family="ui-monospace,monospace" font-weight="600">FEEDBACK</text>
+      <circle cx="700" cy="62" r="11" fill="#a855f7" opacity=".9"/>
+      <text x="700" y="98" text-anchor="middle" font-size="13" fill="#c084fc" font-family="ui-monospace,monospace" font-weight="600">TRIAGE</text>
+      <circle cx="808" cy="62" r="11" fill="#a855f7" opacity=".85"/>
+      <text x="808" y="98" text-anchor="middle" font-size="13" fill="#c084fc" font-family="ui-monospace,monospace" font-weight="600">FIX &amp; PR</text>
+      <text x="490" y="152" text-anchor="middle" font-size="12" fill="#a855f7" font-family="ui-monospace,monospace" opacity=".65">loops back to requirements →</text>
+    </svg>
+  </div>
+</section>
+
+<section class="slide" data-slide data-cam-x="-24" data-cam-y="-44">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:4vw;align-items:center;height:100%">
+    <div>
+      <div class="kicker r">Why Policy Admin, Why Now</div>
+      <h2 class="r d1">Real Program.<br><span class="eb">Kicking Off</span> Now.</h2>
+      <ul class="r d2" style="margin-top:3vh;display:flex;flex-direction:column;gap:16px;list-style:none">
+        <li style="font-size:clamp(15px,1.7vw,21px);color:var(--muted);padding-left:24px;position:relative">
+          <span style="position:absolute;left:0;top:.45em;width:10px;height:10px;border-radius:3px;background:var(--build);display:block"></span>
+          Not hypothetical — decision-ready today
+        </li>
+        <li style="font-size:clamp(15px,1.7vw,21px);color:var(--muted);padding-left:24px;position:relative">
+          <span style="position:absolute;left:0;top:.45em;width:10px;height:10px;border-radius:3px;background:var(--build);display:block"></span>
+          "Policy Admin" spans 5 capability areas — bigger than the name suggests
+        </li>
+        <li style="font-size:clamp(15px,1.7vw,21px);color:var(--muted);padding-left:24px;position:relative">
+          <span style="position:absolute;left:0;top:.45em;width:10px;height:10px;border-radius:3px;background:var(--build);display:block"></span>
+          AI native from day one across all three moments
+        </li>
+      </ul>
+    </div>
+    <div class="r d2" style="display:flex;align-items:center;justify-content:center;height:100%">
+      <svg viewBox="0 0 360 360" width="100%" style="max-height:78vh">
+        <line x1="180" y1="130" x2="180" y2="46" stroke="#1b96ff" stroke-width="2" opacity=".55"/>
+        <line x1="218" y1="140" x2="284" y2="78" stroke="#1b96ff" stroke-width="2" opacity=".55"/>
+        <line x1="228" y1="196" x2="296" y2="270" stroke="#1b96ff" stroke-width="2" opacity=".55"/>
+        <line x1="138" y1="200" x2="70" y2="276" stroke="#1b96ff" stroke-width="2" opacity=".55"/>
+        <line x1="134" y1="142" x2="62" y2="74" stroke="#1b96ff" stroke-width="2" opacity=".55"/>
+        <circle cx="180" cy="174" r="56" fill="var(--ink3)" stroke="#1b96ff" stroke-width="3"/>
+        <text x="180" y="169" text-anchor="middle" font-size="16" fill="#eaf0fb" font-weight="800">Policy</text>
+        <text x="180" y="189" text-anchor="middle" font-size="16" fill="#eaf0fb" font-weight="800">Admin</text>
+        <circle cx="180" cy="30" r="32" fill="var(--ink3)" stroke="#1b96ff" stroke-width="2" opacity=".88"/>
+        <text x="180" y="35" text-anchor="middle" font-size="13" fill="#58c4ff" font-weight="700">Provisions</text>
+        <circle cx="300" cy="68" r="36" fill="var(--ink3)" stroke="#1b96ff" stroke-width="2" opacity=".82"/>
+        <text x="300" y="68" text-anchor="middle" font-size="12.5" fill="#58c4ff" font-weight="700">Integrations</text>
+        <circle cx="308" cy="286" r="34" fill="var(--ink3)" stroke="#1b96ff" stroke-width="2" opacity=".78"/>
+        <text x="308" y="290" text-anchor="middle" font-size="13" fill="#58c4ff" font-weight="700">Reporting</text>
+        <circle cx="52" cy="288" r="36" fill="var(--ink3)" stroke="#1b96ff" stroke-width="2" opacity=".78"/>
+        <text x="52" y="284" text-anchor="middle" font-size="12.5" fill="#58c4ff" font-weight="700">Client</text>
+        <text x="52" y="300" text-anchor="middle" font-size="12.5" fill="#58c4ff" font-weight="700">Config</text>
+        <circle cx="46" cy="62" r="36" fill="var(--ink3)" stroke="#1b96ff" stroke-width="2" opacity=".82"/>
+        <text x="46" y="58" text-anchor="middle" font-size="12.5" fill="#58c4ff" font-weight="700">Lifecycle</text>
+        <text x="46" y="74" text-anchor="middle" font-size="12.5" fill="#58c4ff" font-weight="700">Rules</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-slide data-cam-x="36" data-cam-y="-22">
+  <div class="kicker r">Pillar 1 · AI-Native Development</div>
+  <h2 class="r d1">Requirements &amp; Design: <span class="eb">Accelerated</span></h2>
+  <div class="r d2" style="margin-top:2vh">
+    <svg width="100%" viewBox="0 0 860 60" style="max-height:9vh">
+      <rect x="2" y="4" width="162" height="46" rx="10" fill="#1b96ff" opacity=".22" stroke="#1b96ff" stroke-width="2.5"/>
+      <text x="83" y="33" text-anchor="middle" font-size="16" fill="#58c4ff" font-weight="800">Requirements</text>
+      <path d="M166 27 L184 27" stroke="#1b96ff" stroke-width="2.5" opacity=".5"/>
+      <path d="M182 22 L189 27 L182 32" fill="#1b96ff" opacity=".5"/>
+      <rect x="188" y="4" width="138" height="46" rx="10" fill="#1b96ff" opacity=".18" stroke="#1b96ff" stroke-width="2.5"/>
+      <text x="257" y="33" text-anchor="middle" font-size="16" fill="#58c4ff" font-weight="800">Design</text>
+      <path d="M328 27 L346 27" stroke="#1b96ff" stroke-width="2" opacity=".35"/>
+      <path d="M344 22 L351 27 L344 32" fill="#1b96ff" opacity=".35"/>
+      <rect x="350" y="4" width="158" height="46" rx="10" fill="none" stroke="#2c3550" stroke-width="2"/>
+      <text x="429" y="33" text-anchor="middle" font-size="16" fill="var(--faint)">Documentation</text>
+      <path d="M510 27 L528 27" stroke="var(--line2)" stroke-width="2" opacity=".35"/>
+      <path d="M526 22 L533 27 L526 32" fill="var(--line2)" opacity=".35"/>
+      <rect x="532" y="4" width="110" height="46" rx="10" fill="none" stroke="#2c3550" stroke-width="2"/>
+      <text x="587" y="33" text-anchor="middle" font-size="16" fill="var(--faint)">Code</text>
+      <path d="M644 27 L662 27" stroke="var(--line2)" stroke-width="2" opacity=".35"/>
+      <path d="M660 22 L667 27 L660 32" fill="var(--line2)" opacity=".35"/>
+      <rect x="666" y="4" width="110" height="46" rx="10" fill="none" stroke="#2c3550" stroke-width="2"/>
+      <text x="721" y="33" text-anchor="middle" font-size="16" fill="var(--faint)">Test</text>
+    </svg>
+  </div>
+  <div class="ba-grid r d3">
+    <div class="ba-col bc">
+      <div class="ba-lbl bl">Manual — Weeks</div>
+      <svg viewBox="0 0 320 160" width="100%" style="max-height:24vh">
+        <rect x="18" y="62" width="88" height="68" rx="7" fill="none" stroke="#e05050" stroke-width="2" opacity=".55"/>
+        <rect x="26" y="52" width="88" height="68" rx="7" fill="none" stroke="#e05050" stroke-width="2" opacity=".35"/>
+        <text x="70" y="140" text-anchor="middle" font-size="13" fill="#e05050" font-family="ui-monospace,monospace">Excel / PDF / Notes</text>
+        <path d="M130 84 L192 84" stroke="#e05050" stroke-width="2" stroke-dasharray="5 3" opacity=".55"/>
+        <path d="M190 79 L197 84 L190 89" fill="#e05050" opacity=".55"/>
+        <text x="162" y="56" text-anchor="middle" font-size="11" fill="var(--faint)">back &amp; forth</text>
+        <circle cx="272" cy="86" r="36" fill="none" stroke="#e05050" stroke-width="2.5" opacity=".65"/>
+        <line x1="272" y1="86" x2="272" y2="60" stroke="#e05050" stroke-width="3" opacity=".8"/>
+        <line x1="272" y1="86" x2="290" y2="100" stroke="#e05050" stroke-width="3" opacity=".8"/>
+        <text x="272" y="140" text-anchor="middle" font-size="16" fill="#e05050" font-weight="800">WEEKS</text>
+      </svg>
+    </div>
+    <div style="display:grid;grid-template-rows:1fr 1fr;gap:2vh">
+      <div class="ba-col ac">
+        <div class="ba-lbl al">AI — Requirements → Hours</div>
+        <svg viewBox="0 0 320 90" width="100%" style="max-height:12vh">
+          <rect x="6" y="14" width="60" height="58" rx="5" fill="none" stroke="#1b96ff" stroke-width="2" opacity=".7"/>
+          <rect x="76" y="26" width="46" height="28" rx="12" fill="#1b96ff" opacity=".18" stroke="#1b96ff" stroke-width="2"/>
+          <text x="99" y="45" text-anchor="middle" font-size="14" fill="#58c4ff" font-weight="800">AI</text>
+          <circle cx="264" cy="42" r="30" fill="none" stroke="#38d39f" stroke-width="2.5" opacity=".75"/>
+          <line x1="264" y1="42" x2="264" y2="18" stroke="#38d39f" stroke-width="3" opacity=".9"/>
+          <line x1="264" y1="42" x2="280" y2="54" stroke="#38d39f" stroke-width="3" opacity=".9"/>
+          <text x="264" y="86" text-anchor="middle" font-size="15" fill="#38d39f" font-weight="800">HOURS</text>
+        </svg>
+      </div>
+      <div class="ba-col ac">
+        <div class="ba-lbl al">AI — Design: Instant Fit Scoring</div>
+        <svg viewBox="0 0 320 72" width="100%" style="max-height:10vh">
+          <text x="14" y="24" font-size="14" fill="var(--text)" font-weight="700">Provisions</text>
+          <circle cx="210" cy="18" r="8" fill="#38d39f" opacity=".88"/>
+          <text x="230" y="24" font-size="13" fill="#5ef5c4" font-weight="600">OOTB-ready</text>
+          <line x1="14" y1="36" x2="306" y2="36" stroke="var(--line)" stroke-width="1" opacity=".4"/>
+          <text x="14" y="56" font-size="14" fill="var(--text)" font-weight="700">Integrations</text>
+          <circle cx="210" cy="50" r="8" fill="#e05050" opacity=".88"/>
+          <text x="230" y="56" font-size="13" fill="#e05050" font-weight="600">Custom build</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-slide data-cam-x="-28" data-cam-y="-60">
+  <div class="kicker r">Pillar 1 · Docs, Code &amp; Test</div>
+  <h2 class="r d1">Three Places the <span class="eb">Process Changes</span></h2>
+  <div class="r d2" style="margin-top:3vh;flex:1;min-height:0;display:grid;grid-template-columns:repeat(3,1fr);gap:3vw">
+    <div style="background:var(--ink3);border:1px solid var(--line2);border-radius:20px;padding:3vh 2.2vw;display:flex;flex-direction:column;gap:0">
+      <div style="font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--build-soft);margin-bottom:18px">Documentation</div>
+      <div style="background:var(--ink4);border-radius:10px;padding:14px 16px;border-left:3px solid var(--danger);margin-bottom:10px">
+        <div style="font-size:11px;font-family:var(--mono);color:var(--danger);letter-spacing:.14em;margin-bottom:8px">BEFORE</div>
+        <div style="font-size:clamp(13px,1.3vw,16px);color:var(--muted);line-height:1.5">Written after the meeting — from memory, days later. Agendas, alignment notes, and estimates each drafted by hand, separately.</div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:center;padding:4px 0">
+        <svg width="28" height="24" viewBox="0 0 28 24"><path d="M14 2 L14 18" stroke="#1b96ff" stroke-width="2.5" opacity=".7"/><path d="M7 14 L14 22 L21 14" fill="#1b96ff" opacity=".7"/></svg>
+      </div>
+      <div style="background:var(--build-dim);border-radius:10px;padding:14px 16px;border-left:3px solid var(--build);margin-top:4px">
+        <div style="font-size:11px;font-family:var(--mono);color:var(--build-soft);letter-spacing:.14em;margin-bottom:8px">WITH AI</div>
+        <div style="font-size:clamp(13px,1.3vw,16px);color:var(--text);line-height:1.5">AI listens during the working session and generates the agenda, alignment summary, and effort estimate in real time — before the call ends.</div>
+      </div>
+    </div>
+    <div style="background:var(--ink3);border:1px solid var(--line2);border-radius:20px;padding:3vh 2.2vw;display:flex;flex-direction:column;gap:0">
+      <div style="font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--build-soft);margin-bottom:18px">Code</div>
+      <div style="background:var(--ink4);border-radius:10px;padding:14px 16px;border-left:3px solid var(--danger);margin-bottom:10px">
+        <div style="font-size:11px;font-family:var(--mono);color:var(--danger);letter-spacing:.14em;margin-bottom:8px">BEFORE</div>
+        <div style="font-size:clamp(13px,1.3vw,16px);color:var(--muted);line-height:1.5">Developer reads the spec, recalls platform patterns, writes boilerplate from scratch — context-switching between docs, Stack Overflow, and the IDE.</div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:center;padding:4px 0">
+        <svg width="28" height="24" viewBox="0 0 28 24"><path d="M14 2 L14 18" stroke="#1b96ff" stroke-width="2.5" opacity=".7"/><path d="M7 14 L14 22 L21 14" fill="#1b96ff" opacity=".7"/></svg>
+      </div>
+      <div style="background:var(--build-dim);border-radius:10px;padding:14px 16px;border-left:3px solid var(--build);margin-top:4px">
+        <div style="font-size:11px;font-family:var(--mono);color:var(--build-soft);letter-spacing:.14em;margin-bottom:8px">WITH AI</div>
+        <div style="font-size:clamp(13px,1.3vw,16px);color:var(--text);line-height:1.5">AI pair-programs inline — generating LWC scaffolding, applying Salesforce platform patterns, and flagging anti-patterns as code is written, not after review.</div>
+      </div>
+    </div>
+    <div style="background:var(--ink3);border:1px solid var(--line2);border-radius:20px;padding:3vh 2.2vw;display:flex;flex-direction:column;gap:0">
+      <div style="font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--build-soft);margin-bottom:18px">Testing</div>
+      <div style="background:var(--ink4);border-radius:10px;padding:14px 16px;border-left:3px solid var(--danger);margin-bottom:10px">
+        <div style="font-size:11px;font-family:var(--mono);color:var(--danger);letter-spacing:.14em;margin-bottom:8px">BEFORE</div>
+        <div style="font-size:clamp(13px,1.3vw,16px);color:var(--muted);line-height:1.5">A developer or QA engineer manually reads the data model and writes test cases one field at a time — gaps only surface when something breaks in UAT.</div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:center;padding:4px 0">
+        <svg width="28" height="24" viewBox="0 0 28 24"><path d="M14 2 L14 18" stroke="#1b96ff" stroke-width="2.5" opacity=".7"/><path d="M7 14 L14 22 L21 14" fill="#1b96ff" opacity=".7"/></svg>
+      </div>
+      <div style="background:var(--build-dim);border-radius:10px;padding:14px 16px;border-left:3px solid var(--build);margin-top:4px">
+        <div style="font-size:11px;font-family:var(--mono);color:var(--build-soft);letter-spacing:.14em;margin-bottom:8px">WITH AI</div>
+        <div style="font-size:clamp(13px,1.3vw,16px);color:var(--text);line-height:1.5">AI scans the full data model and generates test cases systematically — covering field permissions, edge cases, and integration scenarios that manual review routinely misses.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-slide data-cam-x="18" data-cam-y="-78">
+  <div class="kicker r">Pillar 1 Summary</div>
+  <h2 class="r d1">Policy Admin Gets Built <span class="eb">Fast.</span></h2>
+  <div class="r d2" style="margin-top:3.5vh;flex:1;min-height:0">
+    <svg width="100%" viewBox="0 0 860 180" style="height:100%;max-height:54vh">
+      <rect x="2" y="10" width="156" height="52" rx="10" fill="#38d39f" opacity=".18" stroke="#38d39f" stroke-width="2.5"/>
+      <circle cx="24" cy="36" r="14" fill="#38d39f" opacity=".9"/>
+      <path d="M18 36 L22 42 L31 28" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <text x="94" y="42" text-anchor="middle" font-size="15" fill="#eaf0fb" font-weight="800">Requirements</text>
+      <text x="80" y="82" text-anchor="middle" font-size="12" fill="#38d39f" font-family="ui-monospace,monospace">Hours ✓</text>
+      <path d="M160 36 L180 36" stroke="#38d39f" stroke-width="2.5" opacity=".55"/>
+      <path d="M178 31 L185 36 L178 41" fill="#38d39f" opacity=".55"/>
+      <rect x="184" y="10" width="132" height="52" rx="10" fill="#38d39f" opacity=".14" stroke="#38d39f" stroke-width="2.5"/>
+      <circle cx="206" cy="36" r="14" fill="#38d39f" opacity=".88"/>
+      <path d="M200 36 L204 42 L213 28" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <text x="268" y="42" text-anchor="middle" font-size="15" fill="#eaf0fb" font-weight="800">Design</text>
+      <text x="268" y="82" text-anchor="middle" font-size="12" fill="#38d39f" font-family="ui-monospace,monospace">AI-scored ✓</text>
+      <path d="M318 36 L338 36" stroke="#38d39f" stroke-width="2.5" opacity=".48"/>
+      <path d="M336 31 L343 36 L336 41" fill="#38d39f" opacity=".48"/>
+      <rect x="342" y="10" width="162" height="52" rx="10" fill="#38d39f" opacity=".12" stroke="#38d39f" stroke-width="2.5"/>
+      <circle cx="364" cy="36" r="14" fill="#38d39f" opacity=".85"/>
+      <path d="M358 36 L362 42 L371 28" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <text x="438" y="42" text-anchor="middle" font-size="15" fill="#eaf0fb" font-weight="800">Documentation</text>
+      <text x="438" y="82" text-anchor="middle" font-size="12" fill="#38d39f" font-family="ui-monospace,monospace">Auto-gen ✓</text>
+      <path d="M506 36 L526 36" stroke="#38d39f" stroke-width="2.5" opacity=".42"/>
+      <path d="M524 31 L531 36 L524 41" fill="#38d39f" opacity=".42"/>
+      <rect x="530" y="10" width="112" height="52" rx="10" fill="#38d39f" opacity=".10" stroke="#38d39f" stroke-width="2.5"/>
+      <circle cx="552" cy="36" r="14" fill="#38d39f" opacity=".82"/>
+      <path d="M546 36 L550 42 L559 28" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <text x="598" y="42" text-anchor="middle" font-size="15" fill="#eaf0fb" font-weight="800">Code</text>
+      <text x="598" y="82" text-anchor="middle" font-size="12" fill="#38d39f" font-family="ui-monospace,monospace">AI-assist ✓</text>
+      <path d="M644 36 L664 36" stroke="#38d39f" stroke-width="2.5" opacity=".36"/>
+      <path d="M662 31 L669 36 L662 41" fill="#38d39f" opacity=".36"/>
+      <rect x="668" y="10" width="112" height="52" rx="10" fill="#38d39f" opacity=".10" stroke="#38d39f" stroke-width="2.5"/>
+      <circle cx="690" cy="36" r="14" fill="#38d39f" opacity=".78"/>
+      <path d="M684 36 L688 42 L697 28" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <text x="738" y="42" text-anchor="middle" font-size="15" fill="#eaf0fb" font-weight="800">Test</text>
+      <text x="738" y="82" text-anchor="middle" font-size="12" fill="#38d39f" font-family="ui-monospace,monospace">131 gaps ✓</text>
+      <path d="M782 36 L858 36" stroke="#38d39f" stroke-width="3" stroke-dasharray="8 4" opacity=".65"/>
+      <path d="M854 30 L862 36 L854 42" fill="#38d39f" opacity=".65"/>
+      <text x="820" y="60" text-anchor="middle" font-size="12" fill="#5ef5c4" font-family="ui-monospace,monospace">GO-LIVE</text>
+      <text x="430" y="130" text-anchor="middle" font-size="18" fill="var(--muted)" font-style="italic">
+        "Go-live isn't the finish line — two more AI stories start here."
+      </text>
+    </svg>
+  </div>
+</section>
+
+<section class="slide" data-slide data-cam-x="20" data-cam-y="-70">
+  <div class="kicker rk r">Pillar 2 · Day-in-the-Life &amp; UI Shift</div>
+  <h2 class="r d1">A Day with <span class="er">AI-Augmented</span> Policy Admin</h2>
+  <div class="storyboard r d2">
+    <div class="sp">
+      <div class="sp-num">01 · MORNING</div>
+      <svg width="110" height="110" viewBox="0 0 110 110" fill="none">
+        <rect x="6" y="14" width="62" height="48" rx="8" fill="none" stroke="#38d39f" stroke-width="2.5" opacity=".85"/>
+        <line x1="16" y1="30" x2="58" y2="30" stroke="#38d39f" stroke-width="2" opacity=".55"/>
+        <line x1="16" y1="42" x2="50" y2="42" stroke="#38d39f" stroke-width="2" opacity=".45"/>
+        <path d="M74 38 L90 38" stroke="#38d39f" stroke-width="3" stroke-dasharray="4 2" opacity=".7"/>
+        <path d="M88 34 L94 38 L88 42" fill="#38d39f" opacity=".7"/>
+        <rect x="96" y="28" width="10" height="28" rx="4" fill="#38d39f" opacity=".2" stroke="#38d39f" stroke-width="1.5"/>
+        <text x="101" y="46" text-anchor="middle" font-size="6.5" fill="#38d39f">SF</text>
+      </svg>
+      <div class="sp-cap">Customer data arrives. AI populates Salesforce automatically — <strong style="color:var(--run-soft)">no manual entry.</strong></div>
+    </div>
+    <div class="sp">
+      <div class="sp-num">02 · MIDDAY</div>
+      <svg width="110" height="110" viewBox="0 0 110 110" fill="none">
+        <rect x="8" y="6" width="50" height="64" rx="7" fill="none" stroke="#1b96ff" stroke-width="2.5" opacity=".75"/>
+        <line x1="18" y1="22" x2="50" y2="22" stroke="#1b96ff" stroke-width="2" opacity=".55"/>
+        <line x1="18" y1="34" x2="50" y2="34" stroke="#1b96ff" stroke-width="2" opacity=".45"/>
+        <rect x="38" y="58" width="64" height="36" rx="16" fill="#1b96ff" opacity=".18" stroke="#1b96ff" stroke-width="2.5"/>
+        <text x="70" y="82" text-anchor="middle" font-size="14" fill="#58c4ff" font-weight="800">AI draft</text>
+      </svg>
+      <div class="sp-cap">Policy team needs client correspondence. AI drafts from <strong style="color:var(--build-soft)">provision language</strong> in Salesforce.</div>
+    </div>
+    <div class="sp">
+      <div class="sp-num">03 · AFTERNOON</div>
+      <svg width="110" height="110" viewBox="0 0 110 110" fill="none">
+        <circle cx="55" cy="40" r="28" fill="none" stroke="#ffb454" stroke-width="2.5" opacity=".9"/>
+        <line x1="55" y1="24" x2="55" y2="42" stroke="#ffb454" stroke-width="3.5" opacity=".9"/>
+        <circle cx="55" cy="52" r="4" fill="#ffb454" opacity=".9"/>
+        <rect x="8" y="80" width="24" height="18" rx="5" fill="none" stroke="#38d39f" stroke-width="2" opacity=".7"/>
+        <rect x="43" y="80" width="24" height="18" rx="5" fill="none" stroke="#38d39f" stroke-width="2" opacity=".7"/>
+        <rect x="78" y="80" width="24" height="18" rx="5" fill="none" stroke="#38d39f" stroke-width="2" opacity=".55"/>
+      </svg>
+      <div class="sp-cap">AI surfaces a <strong style="color:var(--warn)">provision risk flag</strong> across 3 client accounts — before it becomes a problem.</div>
+    </div>
+  </div>
+  <div class="r d3" style="margin-top:3vh;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:2.5vw">
+    <div style="background:var(--ink3);border:1px solid var(--line2);border-radius:14px;padding:2.5vh 2vw">
+      <div style="font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:14px;color:var(--faint)">Traditional: Form UI</div>
+      <svg viewBox="0 0 260 80" width="100%" fill="none">
+        <rect x="8" y="6" width="244" height="18" rx="4" fill="none" stroke="var(--line2)" stroke-width="1.5"/>
+        <text x="16" y="20" font-size="11" fill="var(--faint)">Policy Number</text>
+        <rect x="8" y="32" width="244" height="18" rx="4" fill="none" stroke="var(--line2)" stroke-width="1.5"/>
+        <text x="16" y="46" font-size="11" fill="var(--faint)">Client Name</text>
+        <rect x="8" y="58" width="110" height="18" rx="4" fill="#1b96ff" opacity=".16" stroke="#1b96ff" stroke-width="1.5"/>
+        <text x="63" y="72" text-anchor="middle" font-size="11" fill="#58c4ff">Save Record</text>
+      </svg>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+      <svg width="60" height="28" viewBox="0 0 60 28" fill="none">
+        <path d="M6 14 L54 14" stroke="#38d39f" stroke-width="3"/>
+        <path d="M46 7 L56 14 L46 21" fill="#38d39f"/>
+      </svg>
+      <span style="font-family:var(--mono);font-size:10px;color:var(--run-soft);letter-spacing:.12em">AI-FIRST</span>
+    </div>
+    <div style="background:var(--ink3);border:1px solid rgba(56,211,159,.35);border-radius:14px;padding:2.5vh 2vw">
+      <div style="font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:14px;color:var(--run-soft)">Agent Interface</div>
+      <svg viewBox="0 0 260 80" width="100%" fill="none">
+        <rect x="8" y="6" width="152" height="20" rx="10" fill="#38d39f" opacity=".1" stroke="#38d39f" stroke-width="1.5"/>
+        <text x="18" y="21" font-size="11" fill="var(--muted)">Show expiring policies Q4</text>
+        <rect x="48" y="34" width="204" height="20" rx="10" fill="var(--ink4)" stroke="var(--line2)" stroke-width="1.5"/>
+        <text x="58" y="49" font-size="11" fill="var(--text)">Found 23 — 3 flagged risk…</text>
+        <rect x="8" y="60" width="244" height="16" rx="8" fill="none" stroke="#38d39f" stroke-width="1.5" opacity=".5"/>
+        <text x="18" y="72" font-size="10.5" fill="var(--faint)">Ask anything…</text>
+        <circle cx="242" cy="68" r="8" fill="#38d39f" opacity=".65"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-slide data-cam-x="-34" data-cam-y="-50">
+  <div class="kicker rk r">Pillar 2 · AI in Production — Two Use Cases</div>
+  <h2 class="r d1">Where <span class="er">Policy Admin AI</span> Creates Real Value</h2>
+  <div class="r d2" style="margin-top:2.5vh;flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;gap:3vw">
+    <div style="background:var(--ink3);border:1px solid var(--line2);border-radius:20px;padding:2.8vh 2.2vw;display:flex;flex-direction:column;gap:0;overflow:hidden">
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--run-soft);margin-bottom:10px">Use Case 1</div>
+      <div style="font-size:clamp(16px,1.8vw,24px);font-weight:800;line-height:1.2;margin-bottom:14px;color:var(--text)">Intelligent Document Processing<br><span class="er">&amp; Automated Intake</span></div>
+      <div style="margin-bottom:14px">
+        <svg width="100%" viewBox="0 0 440 64" fill="none">
+          <rect x="2" y="8" width="52" height="48" rx="7" fill="var(--ink4)" stroke="#5b6883" stroke-width="1.5"/>
+          <text x="28" y="28" text-anchor="middle" font-size="9" fill="var(--faint)">PDF</text>
+          <rect x="58" y="14" width="46" height="36" rx="7" fill="var(--ink4)" stroke="#5b6883" stroke-width="1.5"/>
+          <text x="81" y="30" text-anchor="middle" font-size="9" fill="var(--faint)">Email</text>
+          <rect x="108" y="18" width="48" height="32" rx="7" fill="var(--ink4)" stroke="#5b6883" stroke-width="1.5"/>
+          <text x="132" y="34" text-anchor="middle" font-size="9" fill="var(--faint)">Form</text>
+          <path d="M28 56 Q28 66 170 32" stroke="#38d39f" stroke-width="1.8" stroke-dasharray="4 2.5" opacity=".6"/>
+          <path d="M81 50 Q81 60 170 32" stroke="#38d39f" stroke-width="1.8" stroke-dasharray="4 2.5" opacity=".52"/>
+          <path d="M132 50 Q132 58 168 33" stroke="#38d39f" stroke-width="1.8" stroke-dasharray="4 2.5" opacity=".44"/>
+          <rect x="162" y="8" width="80" height="48" rx="14" fill="#38d39f" opacity=".14" stroke="#38d39f" stroke-width="2.5"/>
+          <text x="202" y="30" text-anchor="middle" font-size="14" fill="#5ef5c4" font-weight="900">AI</text>
+          <text x="202" y="47" text-anchor="middle" font-size="9" fill="#5ef5c4" font-weight="600">LLM + OCR</text>
+          <path d="M244 24 L290 12" stroke="#38d39f" stroke-width="2" opacity=".75"/>
+          <path d="M244 32 L290 32" stroke="#38d39f" stroke-width="2" opacity=".65"/>
+          <path d="M244 40 L290 52" stroke="#38d39f" stroke-width="2" opacity=".5"/>
+          <rect x="290" y="26" width="54" height="14" rx="5" fill="#38d39f" opacity=".18" stroke="#38d39f" stroke-width="1.2"/>
+          <text x="317" y="37" text-anchor="middle" font-size="8" fill="#5ef5c4">Straight-through</text>
+          <rect x="290" y="46" width="54" height="14" rx="5" fill="#ffb454" opacity=".14" stroke="#ffb454" stroke-width="1.2"/>
+          <text x="317" y="57" text-anchor="middle" font-size="8" fill="#ffb454">Human review</text>
+          <text x="370" y="38" font-size="8.5" fill="var(--faint)">exception</text>
+          <text x="370" y="49" font-size="8.5" fill="var(--faint)">only</text>
+        </svg>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;flex:1">
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <span style="width:8px;height:8px;border-radius:2px;background:var(--run);margin-top:5px;flex-shrink:0;display:block"></span>
+          <span style="font-size:clamp(13px,1.3vw,16px);color:var(--muted);line-height:1.5"><strong style="color:var(--text)">LLMs + OCR</strong> parse unstructured docs — scanned enrollment forms, EOI applications, beneficiary changes — and map fields directly into the PAS</span>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <span style="width:8px;height:8px;border-radius:2px;background:var(--run);margin-top:5px;flex-shrink:0;display:block"></span>
+          <span style="font-size:clamp(13px,1.3vw,16px);color:var(--muted);line-height:1.5"><strong style="color:var(--text)">Straight-through processing</strong> for standard group enrollments — AI routes to humans only when data is missing or anomalous</span>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <span style="width:8px;height:8px;border-radius:2px;background:var(--run);margin-top:5px;flex-shrink:0;display:block"></span>
+          <span style="font-size:clamp(13px,1.3vw,16px);color:var(--muted);line-height:1.5">Endorsement intake that previously took days now completes in minutes, with fewer data entry errors</span>
+        </div>
+      </div>
+    </div>
+    <div style="background:var(--ink3);border:1px solid var(--line2);border-radius:20px;padding:2.8vh 2.2vw;display:flex;flex-direction:column;gap:0;overflow:hidden">
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--run-soft);margin-bottom:10px">Use Case 2</div>
+      <div style="font-size:clamp(16px,1.8vw,24px);font-weight:800;line-height:1.2;margin-bottom:14px;color:var(--text)">Dynamic Renewal Management<br><span class="er">&amp; Churn Prevention</span></div>
+      <div style="margin-bottom:14px">
+        <svg width="100%" viewBox="0 0 440 64" fill="none">
+          <rect x="2" y="10" width="98" height="44" rx="7" fill="var(--ink4)" stroke="#5b6883" stroke-width="1.5"/>
+          <text x="51" y="27" text-anchor="middle" font-size="9" fill="var(--faint)">Member Signals</text>
+          <line x1="10" y1="36" x2="92" y2="36" stroke="#5b6883" stroke-width="1" opacity=".45"/>
+          <text x="51" y="49" text-anchor="middle" font-size="8" fill="#5b6883" opacity=".7">claims · life events · credit</text>
+          <path d="M102 32 L126 32" stroke="#38d39f" stroke-width="2.5" opacity=".7"/>
+          <path d="M123 27 L130 32 L123 37" fill="#38d39f" opacity=".7"/>
+          <rect x="128" y="8" width="80" height="48" rx="14" fill="#38d39f" opacity=".14" stroke="#38d39f" stroke-width="2.5"/>
+          <text x="168" y="28" text-anchor="middle" font-size="13" fill="#5ef5c4" font-weight="900">ML</text>
+          <text x="168" y="45" text-anchor="middle" font-size="8.5" fill="#5ef5c4" font-weight="600">60-90 day model</text>
+          <path d="M210 24 L250 16" stroke="#38d39f" stroke-width="2" opacity=".75"/>
+          <path d="M210 40 L250 48" stroke="#38d39f" stroke-width="2" opacity=".65"/>
+          <rect x="254" y="6" width="88" height="22" rx="8" fill="#e05050" opacity=".14" stroke="#e05050" stroke-width="1.5"/>
+          <text x="298" y="21" text-anchor="middle" font-size="9" fill="#e05050" font-weight="700">Churn score + flag</text>
+          <rect x="254" y="36" width="88" height="22" rx="8" fill="#38d39f" opacity=".14" stroke="#38d39f" stroke-width="1.5"/>
+          <text x="298" y="51" text-anchor="middle" font-size="9" fill="#5ef5c4" font-weight="700">Coverage suggestion</text>
+          <path d="M344 17 L380 28" stroke="#38d39f" stroke-width="2" opacity=".6"/>
+          <path d="M344 47 L380 36" stroke="#38d39f" stroke-width="2" opacity=".6"/>
+          <circle cx="400" cy="28" r="14" fill="var(--ink4)" stroke="#38d39f" stroke-width="2" opacity=".85"/>
+          <circle cx="400" cy="22" r="7" fill="#38d39f" opacity=".7"/>
+          <path d="M387 42 C387 32 413 32 413 42" fill="#38d39f" opacity=".55"/>
+          <text x="400" y="60" text-anchor="middle" font-size="8.5" fill="var(--run-soft)">Acct Exec</text>
+        </svg>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;flex:1">
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <span style="width:8px;height:8px;border-radius:2px;background:var(--run);margin-top:5px;flex-shrink:0;display:block"></span>
+          <span style="font-size:clamp(13px,1.3vw,16px);color:var(--muted);line-height:1.5"><strong style="color:var(--text)">Predictive churn scoring</strong> — ML monitors life events, claim frequency, and interaction patterns, surfacing at-risk group members 60–90 days before renewal</span>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <span style="width:8px;height:8px;border-radius:2px;background:var(--run);margin-top:5px;flex-shrink:0;display:block"></span>
+          <span style="font-size:clamp(13px,1.3vw,16px);color:var(--muted);line-height:1.5"><strong style="color:var(--text)">Generative AI detects coverage gaps</strong> — an employee who recently added a dependent gets a proactive recommendation to review supplemental coverage — life, accident, or critical illness — before the renewal notice goes out</span>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <span style="width:8px;height:8px;border-radius:2px;background:var(--run);margin-top:5px;flex-shrink:0;display:block"></span>
+          <span style="font-size:clamp(13px,1.3vw,16px);color:var(--muted);line-height:1.5">Turns passive renewals into <strong style="color:var(--text)">retention + upsell moments</strong> — every renewal conversation armed with data, not guesswork</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-slide data-cam-x="-40" data-cam-y="-30">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:4vw;align-items:center;height:100%">
+    <div>
+      <div class="kicker ik r">Pillar 3 · AI-Closed Feedback Loop</div>
+      <h2 class="r d1">Production Signals Are <span class="ei">Sitting Unused.</span></h2>
+      <p class="lede r d2">Every live system generates streams of data about how people actually use it. Most of that signal gets manually triaged — or ignored.</p>
+      <ul class="r d3" style="margin-top:3vh;display:flex;flex-direction:column;gap:16px;list-style:none">
+        <li style="font-size:clamp(15px,1.7vw,21px);color:var(--muted);padding-left:24px;position:relative">
+          <span style="position:absolute;left:0;top:.45em;width:10px;height:10px;border-radius:50%;background:var(--improve);display:block"></span>
+          <strong style="color:var(--improve-soft)">Pendo</strong> records real customer portal activity — session replays, clicks, drop-offs, errors
+        </li>
+        <li style="font-size:clamp(15px,1.7vw,21px);color:var(--muted);padding-left:24px;position:relative">
+          <span style="position:absolute;left:0;top:.45em;width:10px;height:10px;border-radius:50%;background:var(--improve);display:block"></span>
+          <strong style="color:var(--improve-soft)">Support tickets</strong> — direct reports of friction from real users
+        </li>
+      </ul>
+    </div>
+    <div class="r d2" style="display:flex;align-items:center;justify-content:center;height:100%">
+      <svg viewBox="0 0 320 400" width="100%" style="max-height:78vh">
+        <path d="M20,20 L150,20 L116,90 L54,90 Z" fill="var(--ink3)" stroke="#a855f7" stroke-width="2.5" opacity=".88"/>
+        <text x="85" y="46" text-anchor="middle" font-size="16" fill="#c084fc" font-weight="800">Pendo</text>
+        <text x="85" y="66" text-anchor="middle" font-size="13" fill="var(--muted)">Session Data</text>
+        <line x1="85" y1="90" x2="155" y2="188" stroke="#a855f7" stroke-width="2.5" stroke-dasharray="7 4" opacity=".65"/>
+        <path d="M170,20 L300,20 L266,90 L204,90 Z" fill="var(--ink3)" stroke="#a855f7" stroke-width="2.5" opacity=".78"/>
+        <text x="235" y="46" text-anchor="middle" font-size="16" fill="#c084fc" font-weight="800">Support</text>
+        <text x="235" y="66" text-anchor="middle" font-size="13" fill="var(--muted)">Tickets</text>
+        <line x1="235" y1="90" x2="175" y2="188" stroke="#a855f7" stroke-width="2.5" stroke-dasharray="7 4" opacity=".55"/>
+        <circle cx="160" cy="226" r="52" fill="var(--ink3)" stroke="#a855f7" stroke-width="3" opacity=".92"/>
+        <text x="160" y="218" text-anchor="middle" font-size="20" fill="#c084fc" font-weight="900">AI</text>
+        <text x="160" y="240" text-anchor="middle" font-size="14" fill="#c084fc" font-weight="600">Triage</text>
+        <line x1="160" y1="278" x2="160" y2="334" stroke="#a855f7" stroke-width="3" opacity=".7"/>
+        <path d="M152 330 L160 340 L168 330" fill="#a855f7" opacity=".7"/>
+        <rect x="82" y="344" width="156" height="36" rx="12" fill="#a855f7" opacity=".16" stroke="#a855f7" stroke-width="2"/>
+        <text x="160" y="367" text-anchor="middle" font-size="14" fill="#c084fc" font-weight="700">Classified Insights</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-slide data-cam-x="30" data-cam-y="-58">
+  <div class="kicker ik r">Pillar 3 · The Real Tool Chain</div>
+  <h2 class="r d1">Pendo → Gearset → Jira: <span class="ei">Connected by AI</span></h2>
+  <p class="r d2" style="font-size:clamp(14px,1.5vw,18px);color:var(--muted);margin-bottom:2vh;max-width:72ch">Three tools Aflac already uses — bridged by AI into one continuous loop instead of three systems a person manually links.</p>
+  <div class="r d3" style="flex:1;min-height:0">
+    <svg width="100%" viewBox="0 0 920 260" style="height:100%;max-height:46vh">
+      <rect x="2" y="10" width="158" height="120" rx="14" fill="var(--ink3)" stroke="#a855f7" stroke-width="2.5" opacity=".92"/>
+      <text x="81" y="38" text-anchor="middle" font-family="ui-monospace,monospace" font-size="12" fill="#a855f7" letter-spacing="2">CAPTURE</text>
+      <rect x="16" y="46" width="130" height="18" rx="5" fill="#a855f7" opacity=".18" stroke="#a855f7" stroke-width="1.5"/>
+      <text x="81" y="60" text-anchor="middle" font-size="14" fill="#c084fc" font-weight="800">Pendo</text>
+      <text x="81" y="88" text-anchor="middle" font-size="13" fill="var(--muted)">Session replays,</text>
+      <text x="81" y="106" text-anchor="middle" font-size="13" fill="var(--muted)">clicks, drop-offs</text>
+      <text x="81" y="143" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" fill="#a855f7" letter-spacing="1.5" opacity=".8">AUTOMATED</text>
+      <path d="M162 68 L190 68" stroke="#a855f7" stroke-width="3" opacity=".7"/>
+      <path d="M188 62 L196 68 L188 74" fill="#a855f7" opacity=".7"/>
+      <rect x="194" y="10" width="158" height="120" rx="14" fill="var(--ink3)" stroke="#a855f7" stroke-width="2.5" opacity=".87"/>
+      <text x="273" y="38" text-anchor="middle" font-family="ui-monospace,monospace" font-size="12" fill="#a855f7" letter-spacing="2">TRIAGE</text>
+      <rect x="208" y="46" width="130" height="18" rx="5" fill="#a855f7" opacity=".18" stroke="#a855f7" stroke-width="1.5"/>
+      <text x="273" y="60" text-anchor="middle" font-size="14" fill="#c084fc" font-weight="800">AI Analysis</text>
+      <text x="273" y="88" text-anchor="middle" font-size="13" fill="var(--muted)">Bug / UX gap /</text>
+      <text x="273" y="106" text-anchor="middle" font-size="13" fill="var(--muted)">Training / Feature</text>
+      <text x="273" y="143" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" fill="#a855f7" letter-spacing="1.5" opacity=".8">AUTOMATED</text>
+      <path d="M354 68 L382 68" stroke="#a855f7" stroke-width="3" opacity=".65"/>
+      <path d="M380 62 L388 68 L380 74" fill="#a855f7" opacity=".65"/>
+      <rect x="386" y="10" width="158" height="120" rx="14" fill="var(--ink3)" stroke="#a855f7" stroke-width="2.5" opacity=".82"/>
+      <text x="465" y="38" text-anchor="middle" font-family="ui-monospace,monospace" font-size="12" fill="#a855f7" letter-spacing="2">DIAGNOSE</text>
+      <rect x="400" y="46" width="130" height="18" rx="5" fill="#a855f7" opacity=".18" stroke="#a855f7" stroke-width="1.5"/>
+      <text x="465" y="60" text-anchor="middle" font-size="14" fill="#c084fc" font-weight="800">Gearset</text>
+      <text x="465" y="88" text-anchor="middle" font-size="13" fill="var(--muted)">Org intel,</text>
+      <text x="465" y="106" text-anchor="middle" font-size="13" fill="var(--muted)">code/log pinpoint</text>
+      <text x="465" y="143" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" fill="#a855f7" letter-spacing="1.5" opacity=".8">AUTOMATED</text>
+      <path d="M546 68 L574 68" stroke="#a855f7" stroke-width="3" opacity=".60"/>
+      <path d="M572 62 L580 68 L572 74" fill="#a855f7" opacity=".60"/>
+      <rect x="578" y="10" width="158" height="120" rx="14" fill="var(--ink3)" stroke="#a855f7" stroke-width="2.5" opacity=".77"/>
+      <text x="657" y="38" text-anchor="middle" font-family="ui-monospace,monospace" font-size="12" fill="#a855f7" letter-spacing="2">DRAFT FIX</text>
+      <rect x="592" y="46" width="130" height="18" rx="5" fill="#a855f7" opacity=".18" stroke="#a855f7" stroke-width="1.5"/>
+      <text x="657" y="60" text-anchor="middle" font-size="14" fill="#c084fc" font-weight="800">AI Proposal</text>
+      <text x="657" y="88" text-anchor="middle" font-size="13" fill="var(--muted)">Code or config</text>
+      <text x="657" y="106" text-anchor="middle" font-size="13" fill="var(--muted)">change proposed</text>
+      <text x="657" y="143" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" fill="#a855f7" letter-spacing="1.5" opacity=".8">AUTOMATED</text>
+      <path d="M738 68 L762 68" stroke="#38d39f" stroke-width="3.5" opacity=".85"/>
+      <path d="M760 62 L769 68 L760 74" fill="#38d39f" opacity=".85"/>
+      <rect x="766" y="2" width="152" height="136" rx="14" fill="var(--ink3)" stroke="#38d39f" stroke-width="4"/>
+      <circle cx="804" cy="42" r="18" fill="#38d39f" opacity=".18" stroke="#38d39f" stroke-width="2"/>
+      <circle cx="804" cy="36" r="9" fill="#38d39f" opacity=".9"/>
+      <path d="M787 60 C787 47 821 47 821 60" fill="#38d39f" opacity=".7"/>
+      <circle cx="838" cy="26" r="14" fill="#38d39f" opacity=".95"/>
+      <path d="M829 26 L835 33 L848 18" stroke="white" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <text x="842" y="82" text-anchor="middle" font-family="ui-monospace,monospace" font-size="12" fill="#38d39f" letter-spacing="1.5">HUMAN</text>
+      <text x="842" y="98" text-anchor="middle" font-family="ui-monospace,monospace" font-size="12" fill="#38d39f" letter-spacing="1.5">REVIEW</text>
+      <text x="842" y="116" text-anchor="middle" font-size="14" fill="#5ef5c4" font-weight="800">Jira + PR</text>
+      <rect x="766" y="148" width="152" height="30" rx="8" fill="#38d39f" opacity=".18" stroke="#38d39f" stroke-width="2"/>
+      <text x="842" y="168" text-anchor="middle" font-size="12" fill="#5ef5c4" font-weight="700">✓ Human approved first</text>
+      <path d="M842 178 Q842 226 462 232 Q82 238 82 178" fill="none" stroke="#a855f7" stroke-width="2" stroke-dasharray="8 5" opacity=".4"/>
+      <path d="M84 181 L80 176 L89 176" fill="#a855f7" opacity=".4"/>
+      <text x="462" y="252" text-anchor="middle" font-size="12" fill="#a855f7" font-family="ui-monospace,monospace" opacity=".65">fix feeds back into build cycle →</text>
+    </svg>
+  </div>
+</section>
+
+<section class="slide" data-slide data-cam-x="-24" data-cam-y="-44">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:4vw;align-items:center;height:100%">
+    <div>
+      <div class="kicker ik r">Pillar 3 Applied to Policy Admin</div>
+      <h2 class="r d1">The Loop <span class="ei">Closes</span> the Circle</h2>
+      <p class="lede r d2">Once onboarding, provisions, and reporting are live, Pendo captures how users actually interact — friction points no workshop could have predicted.</p>
+      <div class="r d3" style="margin-top:3vh;background:var(--improve-dim);border:1px solid rgba(168,85,247,.35);border-radius:16px;padding:20px 28px">
+        <div style="font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--improve-soft);margin-bottom:10px">Key Outcome</div>
+        <div style="font-size:clamp(20px,2.4vw,34px);font-weight:800;line-height:1.2">Fixes surfaced and<br>PR-ready in <span class="ei">days,</span><br>not quarters</div>
+      </div>
+    </div>
+    <div class="r d2" style="display:flex;align-items:center;justify-content:center;height:100%">
+      <svg viewBox="0 0 320 440" width="100%" style="max-height:78vh">
+        <rect x="20" y="12" width="280" height="34" rx="9" fill="#1b96ff" opacity=".12" stroke="#1b96ff" stroke-width="2"/>
+        <text x="160" y="33" text-anchor="middle" font-size="14" fill="#58c4ff" font-weight="800">Pillar 1: Build Pipeline</text>
+        <text x="160" y="60" text-anchor="middle" font-family="ui-monospace,monospace" font-size="11" fill="var(--faint)" letter-spacing="1.5">REQ → DESIGN → BUILD → TEST</text>
+        <line x1="160" y1="68" x2="160" y2="98" stroke="var(--line2)" stroke-width="2.5" opacity=".6"/>
+        <circle cx="160" cy="114" r="18" fill="none" stroke="#eaf0fb" stroke-width="3"/>
+        <circle cx="160" cy="114" r="8" fill="#eaf0fb"/>
+        <text x="160" y="144" text-anchor="middle" font-size="13" fill="#eaf0fb" font-family="ui-monospace,monospace" font-weight="700">GO-LIVE</text>
+        <path d="M160 132 L160 172" stroke="#38d39f" stroke-width="2.5" opacity=".65"/>
+        <path d="M156 170 L160 178 L164 170" fill="#38d39f" opacity=".65"/>
+        <rect x="92" y="178" width="136" height="36" rx="10" fill="#38d39f" opacity=".14" stroke="#38d39f" stroke-width="2"/>
+        <text x="160" y="200" text-anchor="middle" font-size="14" fill="#5ef5c4" font-weight="800">Pillar 2: Daily Use</text>
+        <path d="M160 214 L160 250" stroke="#a855f7" stroke-width="2.5" opacity=".65"/>
+        <path d="M156 248 L160 256 L164 248" fill="#a855f7" opacity=".65"/>
+        <rect x="72" y="256" width="176" height="36" rx="10" fill="#a855f7" opacity=".12" stroke="#a855f7" stroke-width="2"/>
+        <text x="160" y="278" text-anchor="middle" font-size="14" fill="#c084fc" font-weight="800">Pendo Captures Signal</text>
+        <path d="M160 292 L160 328" stroke="#a855f7" stroke-width="2.5" opacity=".58"/>
+        <path d="M156 326 L160 334 L164 326" fill="#a855f7" opacity=".58"/>
+        <rect x="58" y="334" width="204" height="36" rx="10" fill="#a855f7" opacity=".1" stroke="#a855f7" stroke-width="2"/>
+        <text x="160" y="356" text-anchor="middle" font-size="14" fill="#c084fc" font-weight="800">Gearset → AI → Jira/PR</text>
+        <path d="M58 350 Q8 350 8 192 Q8 38 114 26" fill="none" stroke="#a855f7" stroke-width="2.5" stroke-dasharray="8 5" opacity=".55"/>
+        <path d="M110 22 L118 27 L110 32" fill="#a855f7" opacity=".55"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-slide data-cam-x="14" data-cam-y="-26">
+  <div class="kicker r">The Bottom Line</div>
+  <div class="r d1" style="font-size:clamp(24px,3.4vw,52px);font-weight:800;line-height:1.22;letter-spacing:-.025em;max-width:28ch">
+    AI <span class="eb">builds</span> it faster.
+    AI <span class="er">runs</span> it smarter.
+    AI <span class="ei">improves</span> it continuously.<br>
+    <span style="color:var(--muted)">Same platform. Compounding value.</span>
+  </div>
+  <div class="r d2" style="margin-top:4vh;flex:1;min-height:0">
+    <svg width="100%" viewBox="0 0 960 180" style="height:100%;max-height:36vh">
+      <rect x="20" y="34" width="346" height="44" rx="8" fill="#1b96ff" opacity=".14"/>
+      <rect x="376" y="34" width="244" height="44" rx="8" fill="#38d39f" opacity=".14"/>
+      <rect x="630" y="34" width="230" height="44" rx="8" fill="#a855f7" opacity=".14"/>
+      <text x="192" y="22" text-anchor="middle" font-family="ui-monospace,monospace" font-size="13" fill="#58c4ff" letter-spacing="3" font-weight="700">BUILT WITH AI</text>
+      <text x="498" y="22" text-anchor="middle" font-family="ui-monospace,monospace" font-size="13" fill="#5ef5c4" letter-spacing="3" font-weight="700">RUN WITH AI</text>
+      <text x="745" y="22" text-anchor="middle" font-family="ui-monospace,monospace" font-size="13" fill="#c084fc" letter-spacing="3" font-weight="700">IMPROVED BY AI</text>
+      <line x1="26" y1="56" x2="858" y2="56" stroke="#2c3550" stroke-width="2.5"/>
+      <path d="M854 49 L864 56 L854 63" fill="#2c3550"/>
+      <path d="M860 56 Q930 56 952 104 Q972 148 492 144 Q12 140 10 56 Q10 28 26 56" fill="none" stroke="#a855f7" stroke-width="2" stroke-dasharray="7 5" opacity=".4"/>
+      <circle cx="78" cy="56" r="12" fill="#1b96ff" opacity=".9"/>
+      <text x="78" y="86" text-anchor="middle" font-size="13" fill="#58c4ff" font-family="ui-monospace,monospace" font-weight="600">REQ</text>
+      <circle cx="196" cy="56" r="12" fill="#1b96ff" opacity=".84"/>
+      <text x="196" y="86" text-anchor="middle" font-size="13" fill="#58c4ff" font-family="ui-monospace,monospace" font-weight="600">DESIGN</text>
+      <circle cx="314" cy="56" r="12" fill="#1b96ff" opacity=".78"/>
+      <text x="314" y="86" text-anchor="middle" font-size="13" fill="#58c4ff" font-family="ui-monospace,monospace" font-weight="600">BUILD</text>
+      <circle cx="374" cy="56" r="17" fill="none" stroke="#eaf0fb" stroke-width="3"/>
+      <circle cx="374" cy="56" r="7" fill="#eaf0fb"/>
+      <circle cx="500" cy="56" r="12" fill="#38d39f" opacity=".9"/>
+      <text x="500" y="86" text-anchor="middle" font-size="13" fill="#5ef5c4" font-family="ui-monospace,monospace" font-weight="600">DAILY USE</text>
+      <circle cx="618" cy="56" r="12" fill="#38d39f" opacity=".84"/>
+      <text x="618" y="86" text-anchor="middle" font-size="13" fill="#5ef5c4" font-family="ui-monospace,monospace" font-weight="600">FEEDBACK</text>
+      <circle cx="704" cy="56" r="12" fill="#a855f7" opacity=".9"/>
+      <text x="704" y="86" text-anchor="middle" font-size="13" fill="#c084fc" font-family="ui-monospace,monospace" font-weight="600">TRIAGE</text>
+      <circle cx="810" cy="56" r="12" fill="#a855f7" opacity=".85"/>
+      <text x="810" y="86" text-anchor="middle" font-size="13" fill="#c084fc" font-family="ui-monospace,monospace" font-weight="600">FIX &amp; PR</text>
+    </svg>
+  </div>
+  <div class="r d3" style="margin-top:3vh;display:inline-flex;align-items:center;flex-wrap:wrap;gap:14px;
+    background:linear-gradient(135deg,rgba(27,150,255,.09),rgba(56,211,159,.07),rgba(168,85,247,.09));
+    border:1px solid rgba(168,85,247,.3);border-radius:16px;padding:18px 32px">
+    <span style="font-size:clamp(16px,2vw,26px);font-weight:800">Policy Admin:</span>
+    <span style="font-size:clamp(16px,2vw,26px);font-weight:800;color:var(--build-soft)">Built with AI.</span>
+    <span style="font-size:clamp(16px,2vw,26px);font-weight:800;color:var(--run-soft)">Run with AI.</span>
+    <span style="font-size:clamp(16px,2vw,26px);font-weight:800;color:var(--improve-soft)">Improved by AI.</span>
+  </div>
+  <div class="r d4" style="margin-top:2vh;font-size:clamp(14px,1.5vw,19px);color:var(--muted);max-width:62ch">
+    Position Policy Admin as the flagship proof point — a program to point to across the business, not just within IT.
+  </div>
+</section>
+
+</div>
+
+<div class="hint">
+  <button class="key" onclick="prev()">←</button>
+  <button class="key" onclick="next()">→</button>
+  <span class="key">space</span>
+  <span id="slinfo" style="color:var(--faint);font-size:10px;min-width:3.5em;text-align:right"></span>
+  <button class="key" style="padding:4px 8px;display:inline-flex;align-items:center" onclick="togglePresent()">
+    <svg class="ico-enter" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+    <svg class="ico-exit" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8V5a2 2 0 0 1 2-2h3M20 8V5a2 2 0 0 0-2-2h-3M4 16v3a2 2 0 0 0 2 2h3M20 16v3a2 2 0 0 1-2 2h-3"/></svg>
+  </button>
+</div>
+<div class="prog-dots" id="dots"></div>
+
+<script>
+function ss(x,y,t){const o=(0.18+Math.random()*0.28).toFixed(2),tw=(t+Math.random()*4).toFixed(1),td=(Math.random()*tw).toFixed(1);return `<span class="star" style="left:${x.toFixed(2)}%;top:${y.toFixed(2)}%;--o:${o};--tw:${tw}s;--td:${td}s"></span>`;}
+function seed(el,n,t){let h="";for(let i=0;i<n;i++)h+=ss(Math.random()*100,Math.random()*100,t);el.innerHTML=h;}
+seed(document.getElementById("lfar"),220,7);
+seed(document.getElementById("lmid"),95,6);
+seed(document.getElementById("lnear"),40,5);
+const slides=[...document.querySelectorAll("[data-slide]")];
+const state={i:0};
+const CAM=slides.map((el,idx)=>({x:+(el.getAttribute("data-cam-x")||((idx%2?1:-1)*(10+(idx*9)%38))),y:+(el.getAttribute("data-cam-y")||-(idx*22))}));
+function parallax(){const c=CAM[state.i];[["lnear",1,1],["lmid",.66,.66],["lfar",.28,.28]].forEach(([id,fx,fy])=>{const e=document.getElementById(id);if(e)e.style.transform=`translate(${(c.x*fx).toFixed(1)}%,${(c.y*fy).toFixed(1)}%)`;});const g=document.getElementById("glow");if(g)g.style.transform=`translate(calc(-50% + ${(-c.x*2.2).toFixed(0)}px),calc(-50% + ${(-c.y*1.6).toFixed(0)}px))`;}
+function render(){slides.forEach((s,i)=>{s.classList.toggle("active",i===state.i);s.classList.toggle("past",i<state.i);});parallax();const d=document.getElementById("dots");if(d)d.innerHTML=slides.map((_,i)=>`<div class="pdot ${i===state.i?'on':i<state.i?'seen':''}"></div>`).join("");const si=document.getElementById("slinfo");if(si)si.textContent=`${state.i+1} / ${slides.length}`;}
+function next(){if(state.i<slides.length-1){state.i++;render();}}
+function prev(){if(state.i>0){state.i--;render();}}
+window.addEventListener("keydown",e=>{if(e.key==="ArrowRight"||e.key===" "||e.key==="Enter"){e.preventDefault();next();}else if(e.key==="ArrowLeft"){e.preventDefault();prev();}else if(e.key==="Home"){state.i=0;render();}else if(e.key==="End"){state.i=slides.length-1;render();}});
+document.getElementById("stage").addEventListener("click",()=>next());
+function isFS(){return !!(document.fullscreenElement||document.webkitFullscreenElement);}
+function togglePresent(){if(!isFS()){const r=document.documentElement.requestFullscreen||document.documentElement.webkitRequestFullscreen;if(r)try{r.call(document.documentElement);}catch(e){}}else{const x=document.exitFullscreen||document.webkitExitFullscreen;if(x)try{x.call(document);}catch(e){}}} 
+document.addEventListener("fullscreenchange",()=>document.body.classList.toggle("presenting",isFS()));
+document.addEventListener("webkitfullscreenchange",()=>document.body.classList.toggle("presenting",isFS()));
+(function(){const q=+(new URLSearchParams(location.search).get("s")||0);if(q>0&&q<slides.length)state.i=q;})();
+render();
+</script>
+</body>
+</html>
