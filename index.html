@@ -19,6 +19,7 @@
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow:hidden}
 body{background:var(--ink);color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+/* ── bg ── */
 .bg{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;
   background:radial-gradient(120% 90% at 80% 4%,rgba(27,150,255,.10),transparent 45%),
     radial-gradient(120% 120% at 10% 104%,rgba(168,85,247,.10),transparent 52%),
@@ -32,12 +33,14 @@ body{background:var(--ink);color:var(--text);font-family:var(--sans);-webkit-fon
 .slayer.mid .star{width:2px;height:2px;opacity:.62}
 .slayer.near .star{width:3px;height:3px;opacity:.9;box-shadow:0 0 5px rgba(150,200,255,.55)}
 @keyframes tw{0%,100%{opacity:var(--o,.4)}50%{opacity:calc(var(--o,.4)*1.55)}}
+/* ── stage ── */
 .stage{position:relative;z-index:2;height:100vh;width:100vw}
 .slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;
   padding:4.5vh 5.5vw 5.5vh;opacity:0;transform:translateY(60px) scale(.99);
   transition:opacity .6s ease,transform .8s cubic-bezier(.22,.61,.24,1);pointer-events:none;overflow:hidden}
 .slide.active{opacity:1;transform:none;pointer-events:auto}
 .slide.past{transform:translateY(-70px) scale(.99)}
+/* ── type ── */
 .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;
   margin-bottom:18px;display:flex;align-items:center;gap:12px;color:var(--build-soft)}
 .kicker::before{content:"";width:32px;height:2px;background:var(--build);display:inline-block;flex-shrink:0}
@@ -47,10 +50,12 @@ h1{font-size:clamp(40px,6.2vw,96px);line-height:1.0;font-weight:800;letter-spaci
 h2{font-size:clamp(28px,4.2vw,64px);line-height:1.06;font-weight:800;letter-spacing:-.02em;max-width:24ch}
 .lede{margin-top:18px;font-size:clamp(16px,1.8vw,24px);color:var(--muted);max-width:52ch;line-height:1.5}
 .eb{color:var(--build-soft)}.er{color:var(--run-soft)}.ei{color:var(--improve-soft)}
+/* ── reveal ── */
 .r{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s cubic-bezier(.2,.7,.2,1)}
 .active .r{opacity:1;transform:none}
 .active .r.d1{transition-delay:.10s}.active .r.d2{transition-delay:.20s}.active .r.d3{transition-delay:.30s}
 .active .r.d4{transition-delay:.40s}.active .r.d5{transition-delay:.50s}
+/* ── layouts ── */
 .two{display:grid;grid-template-columns:1.15fr 1fr;gap:4vw;align-items:center;flex:1;min-height:0}
 .ba-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.5vw;margin-top:2.5vh;flex:1;min-height:0}
 .ba-col{background:var(--ink3);border-radius:16px;padding:2.5vh 2vw;border:1px solid var(--line)}
@@ -70,6 +75,7 @@ h2{font-size:clamp(28px,4.2vw,64px);line-height:1.06;font-weight:800;letter-spac
   padding:3vh 2vw;display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px}
 .sp-num{font-family:var(--mono);font-size:11px;color:var(--run-soft);letter-spacing:.2em}
 .sp-cap{font-size:clamp(14px,1.4vw,17px);color:var(--muted);line-height:1.5}
+/* ── chrome ── */
 .hint{position:fixed;bottom:22px;left:28px;z-index:6;font-family:var(--mono);font-size:11px;
   color:var(--faint);display:flex;gap:9px;align-items:center;opacity:.7}
 .key{border:1px solid var(--line);border-radius:5px;padding:2px 8px;color:var(--muted);background:var(--ink2)}
@@ -94,6 +100,7 @@ body.presenting .ico-enter{display:none}body.presenting .ico-exit{display:inline
 </div>
 <div class="stage" id="stage">
 
+<!-- ════════════════ SLIDE 1: TITLE ════════════════ -->
 <section class="slide" data-slide data-cam-x="0" data-cam-y="0">
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:4vw;align-items:center;height:100%">
     <div>
@@ -106,6 +113,7 @@ body.presenting .ico-enter{display:none}body.presenting .ico-exit{display:inline
     </div>
     <div class="r d2" style="display:flex;align-items:center;justify-content:center;height:100%">
       <svg width="100%" viewBox="0 0 420 440" style="max-height:82vh">
+        <!-- BUILD panel -->
         <rect x="8" y="30" width="116" height="158" rx="18" fill="var(--ink3)" stroke="#1b96ff" stroke-width="2.5" opacity=".95"/>
         <text x="66" y="18" text-anchor="middle" font-family="ui-monospace,monospace" font-size="12" fill="#1b96ff" letter-spacing="4" font-weight="600">BUILD</text>
         <g transform="translate(66,110)">
@@ -114,9 +122,14 @@ body.presenting .ico-enter{display:none}body.presenting .ico-exit{display:inline
           <g stroke="#1b96ff" stroke-width="4" stroke-linecap="round" opacity=".78">
             <line x1="0" y1="-30" x2="0" y2="-38"/><line x1="0" y1="30" x2="0" y2="38"/>
             <line x1="30" y1="0" x2="38" y2="0"/><line x1="-30" y1="0" x2="-38" y2="0"/>
+            <line x1="21.2" y1="-21.2" x2="27" y2="-27"/><line x1="-21.2" y1="21.2" x2="-27" y2="27"/>
+            <line x1="21.2" y1="21.2" x2="27" y2="27"/><line x1="-21.2" y1="-21.2" x2="-27" y2="-27"/>
           </g>
+          <line x1="-18" y1="-4" x2="18" y2="-4" stroke="#1b96ff" stroke-width="1.5" opacity=".3"/>
+          <line x1="-18" y1="5" x2="18" y2="5" stroke="#1b96ff" stroke-width="1.5" opacity=".22"/>
         </g>
         <text x="66" y="178" text-anchor="middle" font-size="16" fill="#58c4ff" font-weight="800">Faster</text>
+        <!-- RUN panel -->
         <rect x="152" y="30" width="116" height="158" rx="18" fill="var(--ink3)" stroke="#38d39f" stroke-width="2.5" opacity=".95"/>
         <text x="210" y="18" text-anchor="middle" font-family="ui-monospace,monospace" font-size="12" fill="#38d39f" letter-spacing="4" font-weight="600">RUN</text>
         <g transform="translate(210,92)">
@@ -124,8 +137,14 @@ body.presenting .ico-enter{display:none}body.presenting .ico-exit{display:inline
           <rect x="-24" y="-18" width="18" height="9" rx="3" fill="#38d39f" opacity=".22"/>
           <rect x="-24" y="-5" width="13" height="9" rx="3" fill="#38d39f" opacity=".2"/>
           <rect x="-24" y="8" width="16" height="9" rx="3" fill="#38d39f" opacity=".18"/>
+          <rect x="-2" y="-18" width="20" height="30" rx="3" fill="#38d39f" opacity=".1"/>
         </g>
+        <rect x="162" y="132" width="96" height="30" rx="14" fill="none" stroke="#38d39f" stroke-width="2" opacity=".85"/>
+        <circle cx="183" cy="147" r="4" fill="#38d39f" opacity=".85"/>
+        <circle cx="197" cy="147" r="4" fill="#38d39f" opacity=".85"/>
+        <circle cx="211" cy="147" r="4" fill="#38d39f" opacity=".85"/>
         <text x="210" y="178" text-anchor="middle" font-size="16" fill="#5ef5c4" font-weight="800">Smarter</text>
+        <!-- IMPROVE panel -->
         <rect x="296" y="30" width="116" height="158" rx="18" fill="var(--ink3)" stroke="#a855f7" stroke-width="2.5" opacity=".95"/>
         <text x="354" y="18" text-anchor="middle" font-family="ui-monospace,monospace" font-size="11" fill="#a855f7" letter-spacing="3" font-weight="600">IMPROVE</text>
         <g transform="translate(354,110)">
@@ -136,18 +155,27 @@ body.presenting .ico-enter{display:none}body.presenting .ico-exit{display:inline
           <line x1="0" y1="-7" x2="0" y2="7" stroke="#a855f7" stroke-width="2.5" opacity=".65"/>
         </g>
         <text x="354" y="178" text-anchor="middle" font-size="16" fill="#c084fc" font-weight="800">Continuously</text>
+        <!-- converging arrows -->
         <path d="M120 120 L176 270" stroke="#1b96ff" stroke-width="2" stroke-dasharray="5 3" opacity=".5"/>
         <path d="M210 192 L210 262" stroke="#38d39f" stroke-width="2" stroke-dasharray="5 3" opacity=".5"/>
         <path d="M300 120 L244 270" stroke="#a855f7" stroke-width="2" stroke-dasharray="5 3" opacity=".5"/>
+        <path d="M174 268 L179 274 L173 278" fill="#1b96ff" opacity=".5"/>
+        <path d="M207 260 L210 266 L213 260" fill="#38d39f" opacity=".5"/>
+        <path d="M246 268 L241 274 L247 278" fill="#a855f7" opacity=".5"/>
+        <!-- Salesforce cloud large -->
         <g transform="translate(210,322)">
           <path d="M-28,-22 C-28,-35 -15,-44 0,-41 C4,-52 18,-60 32,-54 C38,-64 56,-64 60,-50 C70,-50 76,-40 70,-30 C77,-26 76,-10 66,0 C66,10 58,18 44,18 C42,26 28,28 18,20 C14,30 -4,30 -8,20 C-18,26 -28,18 -30,4 C-38,0 -38,-16 -28,-22Z" fill="none" stroke="#1b96ff" stroke-width="2.5"/>
+          <path d="M-28,-22 C-28,-35 -15,-44 0,-41 C4,-52 18,-60 32,-54 C38,-64 56,-64 60,-50 C70,-50 76,-40 70,-30 C77,-26 76,-10 66,0 C66,10 58,18 44,18 C42,26 28,28 18,20 C14,30 -4,30 -8,20 C-18,26 -28,18 -30,4 C-38,0 -38,-16 -28,-22Z" fill="none" stroke="#38d39f" stroke-width="2" opacity=".4"/>
+          <path d="M-28,-22 C-28,-35 -15,-44 0,-41 C4,-52 18,-60 32,-54 C38,-64 56,-64 60,-50 C70,-50 76,-40 70,-30 C77,-26 76,-10 66,0 C66,10 58,18 44,18 C42,26 28,28 18,20 C14,30 -4,30 -8,20 C-18,26 -28,18 -30,4 C-38,0 -38,-16 -28,-22Z" fill="none" stroke="#a855f7" stroke-width="2" opacity=".3"/>
           <text x="22" y="5" text-anchor="middle" font-size="14" fill="#eaf0fb" font-family="ui-monospace,monospace" font-weight="600" opacity=".8">Salesforce</text>
         </g>
+        <text x="210" y="430" text-anchor="middle" font-size="12" fill="var(--faint)" font-family="ui-monospace,monospace" letter-spacing="2">— any platform</text>
       </svg>
     </div>
   </div>
 </section>
 
+<!-- ════════════════ SLIDE 2: BIG IDEA ════════════════ -->
 <section class="slide" data-slide data-cam-x="22" data-cam-y="-18">
   <div class="kicker r">The Thesis</div>
   <div class="r d1" style="font-size:clamp(22px,3.2vw,48px);font-weight:800;line-height:1.22;letter-spacing:-.025em;max-width:28ch">
@@ -158,88 +186,53 @@ body.presenting .ico-enter{display:none}body.presenting .ico-exit{display:inline
   </div>
   <div class="r d2" style="margin-top:4vh;flex:1;min-height:0">
     <svg width="100%" viewBox="0 0 960 200" style="height:100%;max-height:44vh">
+      <!-- zone fills -->
       <rect x="20" y="40" width="340" height="44" rx="8" fill="#1b96ff" opacity=".1"/>
       <rect x="370" y="40" width="240" height="44" rx="8" fill="#38d39f" opacity=".1"/>
       <rect x="620" y="40" width="236" height="44" rx="8" fill="#a855f7" opacity=".1"/>
+      <!-- zone labels -->
       <text x="190" y="26" text-anchor="middle" font-family="ui-monospace,monospace" font-size="13" fill="#58c4ff" letter-spacing="3" font-weight="600">PILLAR 1 · BUILD</text>
       <text x="490" y="26" text-anchor="middle" font-family="ui-monospace,monospace" font-size="13" fill="#5ef5c4" letter-spacing="3" font-weight="600">PILLAR 2 · RUN</text>
       <text x="738" y="26" text-anchor="middle" font-family="ui-monospace,monospace" font-size="13" fill="#c084fc" letter-spacing="3" font-weight="600">PILLAR 3 · IMPROVE</text>
+      <!-- timeline -->
       <line x1="26" y1="62" x2="854" y2="62" stroke="#2c3550" stroke-width="2.5"/>
       <path d="M850 55 L860 62 L850 69" fill="#2c3550"/>
+      <!-- loop curve -->
       <path d="M856 62 Q930 62 950 116 Q968 168 490 163 Q12 158 8 62 Q8 32 26 62" fill="none" stroke="#a855f7" stroke-width="2" stroke-dasharray="7 5" opacity=".4"/>
+      <path d="M22 57 L28 64 L35 58" fill="#a855f7" opacity=".4"/>
+      <!-- BUILD nodes -->
       <circle cx="80" cy="62" r="11" fill="#1b96ff" opacity=".9"/>
       <text x="80" y="98" text-anchor="middle" font-size="13" fill="#58c4ff" font-family="ui-monospace,monospace" font-weight="600">REQ</text>
       <circle cx="200" cy="62" r="11" fill="#1b96ff" opacity=".82"/>
       <text x="200" y="98" text-anchor="middle" font-size="13" fill="#58c4ff" font-family="ui-monospace,monospace" font-weight="600">DESIGN</text>
       <circle cx="320" cy="62" r="11" fill="#1b96ff" opacity=".75"/>
       <text x="320" y="98" text-anchor="middle" font-size="13" fill="#58c4ff" font-family="ui-monospace,monospace" font-weight="600">BUILD</text>
+      <!-- GO-LIVE -->
       <circle cx="368" cy="62" r="18" fill="none" stroke="#eaf0fb" stroke-width="3"/>
       <circle cx="368" cy="62" r="8" fill="#eaf0fb"/>
       <text x="368" y="14" text-anchor="middle" font-size="12" fill="#eaf0fb" font-family="ui-monospace,monospace" font-weight="700" letter-spacing="1.5">GO-LIVE</text>
       <line x1="368" y1="18" x2="368" y2="44" stroke="#eaf0fb" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <!-- RUN nodes -->
       <circle cx="490" cy="62" r="11" fill="#38d39f" opacity=".9"/>
       <text x="490" y="98" text-anchor="middle" font-size="13" fill="#5ef5c4" font-family="ui-monospace,monospace" font-weight="600">DAILY USE</text>
       <circle cx="610" cy="62" r="11" fill="#38d39f" opacity=".8"/>
       <text x="610" y="98" text-anchor="middle" font-size="13" fill="#5ef5c4" font-family="ui-monospace,monospace" font-weight="600">FEEDBACK</text>
+      <!-- IMPROVE nodes -->
       <circle cx="700" cy="62" r="11" fill="#a855f7" opacity=".9"/>
       <text x="700" y="98" text-anchor="middle" font-size="13" fill="#c084fc" font-family="ui-monospace,monospace" font-weight="600">TRIAGE</text>
       <circle cx="808" cy="62" r="11" fill="#a855f7" opacity=".85"/>
       <text x="808" y="98" text-anchor="middle" font-size="13" fill="#c084fc" font-family="ui-monospace,monospace" font-weight="600">FIX &amp; PR</text>
+      <!-- labels below loop -->
       <text x="490" y="152" text-anchor="middle" font-size="12" fill="#a855f7" font-family="ui-monospace,monospace" opacity=".65">loops back to requirements →</text>
     </svg>
   </div>
 </section>
 
-<section class="slide" data-slide data-cam-x="-24" data-cam-y="-44">
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:4vw;align-items:center;height:100%">
-    <div>
-      <div class="kicker r">Why Policy Admin, Why Now</div>
-      <h2 class="r d1">Real Program.<br><span class="eb">Kicking Off</span> Now.</h2>
-      <ul class="r d2" style="margin-top:3vh;display:flex;flex-direction:column;gap:16px;list-style:none">
-        <li style="font-size:clamp(15px,1.7vw,21px);color:var(--muted);padding-left:24px;position:relative">
-          <span style="position:absolute;left:0;top:.45em;width:10px;height:10px;border-radius:3px;background:var(--build);display:block"></span>
-          Not hypothetical — decision-ready today
-        </li>
-        <li style="font-size:clamp(15px,1.7vw,21px);color:var(--muted);padding-left:24px;position:relative">
-          <span style="position:absolute;left:0;top:.45em;width:10px;height:10px;border-radius:3px;background:var(--build);display:block"></span>
-          "Policy Admin" spans 5 capability areas — bigger than the name suggests
-        </li>
-        <li style="font-size:clamp(15px,1.7vw,21px);color:var(--muted);padding-left:24px;position:relative">
-          <span style="position:absolute;left:0;top:.45em;width:10px;height:10px;border-radius:3px;background:var(--build);display:block"></span>
-          AI native from day one across all three moments
-        </li>
-      </ul>
-    </div>
-    <div class="r d2" style="display:flex;align-items:center;justify-content:center;height:100%">
-      <svg viewBox="0 0 360 360" width="100%" style="max-height:78vh">
-        <line x1="180" y1="130" x2="180" y2="46" stroke="#1b96ff" stroke-width="2" opacity=".55"/>
-        <line x1="218" y1="140" x2="284" y2="78" stroke="#1b96ff" stroke-width="2" opacity=".55"/>
-        <line x1="228" y1="196" x2="296" y2="270" stroke="#1b96ff" stroke-width="2" opacity=".55"/>
-        <line x1="138" y1="200" x2="70" y2="276" stroke="#1b96ff" stroke-width="2" opacity=".55"/>
-        <line x1="134" y1="142" x2="62" y2="74" stroke="#1b96ff" stroke-width="2" opacity=".55"/>
-        <circle cx="180" cy="174" r="56" fill="var(--ink3)" stroke="#1b96ff" stroke-width="3"/>
-        <text x="180" y="169" text-anchor="middle" font-size="16" fill="#eaf0fb" font-weight="800">Policy</text>
-        <text x="180" y="189" text-anchor="middle" font-size="16" fill="#eaf0fb" font-weight="800">Admin</text>
-        <circle cx="180" cy="30" r="32" fill="var(--ink3)" stroke="#1b96ff" stroke-width="2" opacity=".88"/>
-        <text x="180" y="35" text-anchor="middle" font-size="13" fill="#58c4ff" font-weight="700">Provisions</text>
-        <circle cx="300" cy="68" r="36" fill="var(--ink3)" stroke="#1b96ff" stroke-width="2" opacity=".82"/>
-        <text x="300" y="68" text-anchor="middle" font-size="12.5" fill="#58c4ff" font-weight="700">Integrations</text>
-        <circle cx="308" cy="286" r="34" fill="var(--ink3)" stroke="#1b96ff" stroke-width="2" opacity=".78"/>
-        <text x="308" y="290" text-anchor="middle" font-size="13" fill="#58c4ff" font-weight="700">Reporting</text>
-        <circle cx="52" cy="288" r="36" fill="var(--ink3)" stroke="#1b96ff" stroke-width="2" opacity=".78"/>
-        <text x="52" y="284" text-anchor="middle" font-size="12.5" fill="#58c4ff" font-weight="700">Client</text>
-        <text x="52" y="300" text-anchor="middle" font-size="12.5" fill="#58c4ff" font-weight="700">Config</text>
-        <circle cx="46" cy="62" r="36" fill="var(--ink3)" stroke="#1b96ff" stroke-width="2" opacity=".82"/>
-        <text x="46" y="58" text-anchor="middle" font-size="12.5" fill="#58c4ff" font-weight="700">Lifecycle</text>
-        <text x="46" y="74" text-anchor="middle" font-size="12.5" fill="#58c4ff" font-weight="700">Rules</text>
-      </svg>
-    </div>
-  </div>
-</section>
-
+<!-- ════════════════ SLIDE 3: PILLAR 1 REQ & DESIGN ════════════════ -->
 <section class="slide" data-slide data-cam-x="36" data-cam-y="-22">
   <div class="kicker r">Pillar 1 · AI-Native Development</div>
   <h2 class="r d1">Requirements &amp; Design: <span class="eb">Accelerated</span></h2>
+  <!-- pipeline -->
   <div class="r d2" style="margin-top:2vh">
     <svg width="100%" viewBox="0 0 860 60" style="max-height:9vh">
       <rect x="2" y="4" width="162" height="46" rx="10" fill="#1b96ff" opacity=".22" stroke="#1b96ff" stroke-width="2.5"/>
@@ -262,15 +255,22 @@ body.presenting .ico-enter{display:none}body.presenting .ico-exit{display:inline
       <text x="721" y="33" text-anchor="middle" font-size="16" fill="var(--faint)">Test</text>
     </svg>
   </div>
+  <!-- before/after grid -->
   <div class="ba-grid r d3">
     <div class="ba-col bc">
       <div class="ba-lbl bl">Manual — Weeks</div>
       <svg viewBox="0 0 320 160" width="100%" style="max-height:24vh">
         <rect x="18" y="62" width="88" height="68" rx="7" fill="none" stroke="#e05050" stroke-width="2" opacity=".55"/>
         <rect x="26" y="52" width="88" height="68" rx="7" fill="none" stroke="#e05050" stroke-width="2" opacity=".35"/>
+        <rect x="34" y="42" width="88" height="68" rx="7" fill="none" stroke="#e05050" stroke-width="2" opacity=".18"/>
+        <line x1="42" y1="58" x2="112" y2="58" stroke="#e05050" stroke-width="1.5" opacity=".45"/>
+        <line x1="42" y1="70" x2="104" y2="70" stroke="#e05050" stroke-width="1.5" opacity=".35"/>
+        <line x1="42" y1="82" x2="108" y2="82" stroke="#e05050" stroke-width="1.5" opacity=".25"/>
         <text x="70" y="140" text-anchor="middle" font-size="13" fill="#e05050" font-family="ui-monospace,monospace">Excel / PDF / Notes</text>
         <path d="M130 84 L192 84" stroke="#e05050" stroke-width="2" stroke-dasharray="5 3" opacity=".55"/>
         <path d="M190 79 L197 84 L190 89" fill="#e05050" opacity=".55"/>
+        <path d="M192 68 L130 68" stroke="#e05050" stroke-width="1.8" stroke-dasharray="5 3" opacity=".4"/>
+        <path d="M132 63 L125 68 L132 73" fill="#e05050" opacity=".4"/>
         <text x="162" y="56" text-anchor="middle" font-size="11" fill="var(--faint)">back &amp; forth</text>
         <circle cx="272" cy="86" r="36" fill="none" stroke="#e05050" stroke-width="2.5" opacity=".65"/>
         <line x1="272" y1="86" x2="272" y2="60" stroke="#e05050" stroke-width="3" opacity=".8"/>
@@ -283,8 +283,23 @@ body.presenting .ico-enter{display:none}body.presenting .ico-exit{display:inline
         <div class="ba-lbl al">AI — Requirements → Hours</div>
         <svg viewBox="0 0 320 90" width="100%" style="max-height:12vh">
           <rect x="6" y="14" width="60" height="58" rx="5" fill="none" stroke="#1b96ff" stroke-width="2" opacity=".7"/>
+          <line x1="14" y1="30" x2="60" y2="30" stroke="#1b96ff" stroke-width="1.5" opacity=".5"/>
+          <line x1="14" y1="42" x2="54" y2="42" stroke="#1b96ff" stroke-width="1.5" opacity=".4"/>
           <rect x="76" y="26" width="46" height="28" rx="12" fill="#1b96ff" opacity=".18" stroke="#1b96ff" stroke-width="2"/>
           <text x="99" y="45" text-anchor="middle" font-size="14" fill="#58c4ff" font-weight="800">AI</text>
+          <path d="M70 42 L74 42" stroke="#1b96ff" stroke-width="2" opacity=".55"/>
+          <path d="M72 38 L78 42 L72 46" fill="#1b96ff" opacity=".55"/>
+          <path d="M126 42 L148 42" stroke="#38d39f" stroke-width="2.5" opacity=".65"/>
+          <path d="M146 38 L154 42 L146 46" fill="#38d39f" opacity=".65"/>
+          <!-- tree -->
+          <line x1="172" y1="10" x2="172" y2="24" stroke="#38d39f" stroke-width="2" opacity=".7"/>
+          <line x1="172" y1="26" x2="144" y2="70" stroke="#38d39f" stroke-width="2" opacity=".6"/>
+          <line x1="172" y1="26" x2="172" y2="70" stroke="#38d39f" stroke-width="2" opacity=".6"/>
+          <line x1="172" y1="26" x2="200" y2="70" stroke="#38d39f" stroke-width="2" opacity=".6"/>
+          <circle cx="172" cy="8" r="9" fill="#38d39f" opacity=".8"/>
+          <circle cx="144" cy="78" r="8" fill="#38d39f" opacity=".65"/>
+          <circle cx="172" cy="78" r="8" fill="#38d39f" opacity=".65"/>
+          <circle cx="200" cy="78" r="8" fill="#38d39f" opacity=".65"/>
           <circle cx="264" cy="42" r="30" fill="none" stroke="#38d39f" stroke-width="2.5" opacity=".75"/>
           <line x1="264" y1="42" x2="264" y2="18" stroke="#38d39f" stroke-width="3" opacity=".9"/>
           <line x1="264" y1="42" x2="280" y2="54" stroke="#38d39f" stroke-width="3" opacity=".9"/>
@@ -301,16 +316,20 @@ body.presenting .ico-enter{display:none}body.presenting .ico-exit{display:inline
           <text x="14" y="56" font-size="14" fill="var(--text)" font-weight="700">Integrations</text>
           <circle cx="210" cy="50" r="8" fill="#e05050" opacity=".88"/>
           <text x="230" y="56" font-size="13" fill="#e05050" font-weight="600">Custom build</text>
+          <line x1="14" y1="68" x2="306" y2="68" stroke="var(--line)" stroke-width="1" opacity=".3"/>
         </svg>
       </div>
     </div>
   </div>
 </section>
 
+<!-- ════════════════ SLIDE 4: DOCS, CODE, TEST ════════════════ -->
 <section class="slide" data-slide data-cam-x="-28" data-cam-y="-60">
   <div class="kicker r">Pillar 1 · Docs, Code &amp; Test</div>
   <h2 class="r d1">Three Places the <span class="eb">Process Changes</span></h2>
   <div class="r d2" style="margin-top:3vh;flex:1;min-height:0;display:grid;grid-template-columns:repeat(3,1fr);gap:3vw">
+
+    <!-- DOCUMENTATION -->
     <div style="background:var(--ink3);border:1px solid var(--line2);border-radius:20px;padding:3vh 2.2vw;display:flex;flex-direction:column;gap:0">
       <div style="font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--build-soft);margin-bottom:18px">Documentation</div>
       <div style="background:var(--ink4);border-radius:10px;padding:14px 16px;border-left:3px solid var(--danger);margin-bottom:10px">
@@ -325,6 +344,8 @@ body.presenting .ico-enter{display:none}body.presenting .ico-exit{display:inline
         <div style="font-size:clamp(13px,1.3vw,16px);color:var(--text);line-height:1.5">AI listens during the working session and generates the agenda, alignment summary, and effort estimate in real time — before the call ends.</div>
       </div>
     </div>
+
+    <!-- CODE -->
     <div style="background:var(--ink3);border:1px solid var(--line2);border-radius:20px;padding:3vh 2.2vw;display:flex;flex-direction:column;gap:0">
       <div style="font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--build-soft);margin-bottom:18px">Code</div>
       <div style="background:var(--ink4);border-radius:10px;padding:14px 16px;border-left:3px solid var(--danger);margin-bottom:10px">
@@ -339,6 +360,8 @@ body.presenting .ico-enter{display:none}body.presenting .ico-exit{display:inline
         <div style="font-size:clamp(13px,1.3vw,16px);color:var(--text);line-height:1.5">AI pair-programs inline — generating LWC scaffolding, applying Salesforce platform patterns, and flagging anti-patterns as code is written, not after review.</div>
       </div>
     </div>
+
+    <!-- TESTING -->
     <div style="background:var(--ink3);border:1px solid var(--line2);border-radius:20px;padding:3vh 2.2vw;display:flex;flex-direction:column;gap:0">
       <div style="font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--build-soft);margin-bottom:18px">Testing</div>
       <div style="background:var(--ink4);border-radius:10px;padding:14px 16px;border-left:3px solid var(--danger);margin-bottom:10px">
@@ -353,9 +376,11 @@ body.presenting .ico-enter{display:none}body.presenting .ico-exit{display:inline
         <div style="font-size:clamp(13px,1.3vw,16px);color:var(--text);line-height:1.5">AI scans the full data model and generates test cases systematically — covering field permissions, edge cases, and integration scenarios that manual review routinely misses.</div>
       </div>
     </div>
+
   </div>
 </section>
 
+<!-- ════════════════ SLIDE 5: PILLAR 1 SUMMARY ════════════════ -->
 <section class="slide" data-slide data-cam-x="18" data-cam-y="-78">
   <div class="kicker r">Pillar 1 Summary</div>
   <h2 class="r d1">Policy Admin Gets Built <span class="eb">Fast.</span></h2>
@@ -404,6 +429,7 @@ body.presenting .ico-enter{display:none}body.presenting .ico-exit{display:inline
   </div>
 </section>
 
+<!-- ════════════════ SLIDE 6: DAY IN THE LIFE ════════════════ -->
 <section class="slide" data-slide data-cam-x="20" data-cam-y="-70">
   <div class="kicker rk r">Pillar 2 · Day-in-the-Life &amp; UI Shift</div>
   <h2 class="r d1">A Day with <span class="er">AI-Augmented</span> Policy Admin</h2>
@@ -414,12 +440,13 @@ body.presenting .ico-enter{display:none}body.presenting .ico-exit{display:inline
         <rect x="6" y="14" width="62" height="48" rx="8" fill="none" stroke="#38d39f" stroke-width="2.5" opacity=".85"/>
         <line x1="16" y1="30" x2="58" y2="30" stroke="#38d39f" stroke-width="2" opacity=".55"/>
         <line x1="16" y1="42" x2="50" y2="42" stroke="#38d39f" stroke-width="2" opacity=".45"/>
+        <line x1="16" y1="54" x2="54" y2="54" stroke="#38d39f" stroke-width="2" opacity=".35"/>
         <path d="M74 38 L90 38" stroke="#38d39f" stroke-width="3" stroke-dasharray="4 2" opacity=".7"/>
         <path d="M88 34 L94 38 L88 42" fill="#38d39f" opacity=".7"/>
         <rect x="96" y="28" width="10" height="28" rx="4" fill="#38d39f" opacity=".2" stroke="#38d39f" stroke-width="1.5"/>
         <text x="101" y="46" text-anchor="middle" font-size="6.5" fill="#38d39f">SF</text>
       </svg>
-      <div class="sp-cap">Customer data arrives. AI populates Salesforce automatically — <strong style="color:var(--run-soft)">no manual entry.</strong></div>
+      <div class="sp-cap">Customer Excel arrives. AI populates Salesforce automatically — <strong style="color:var(--run-soft)">no manual entry.</strong></div>
     </div>
     <div class="sp">
       <div class="sp-num">02 · MIDDAY</div>
@@ -427,6 +454,7 @@ body.presenting .ico-enter{display:none}body.presenting .ico-exit{display:inline
         <rect x="8" y="6" width="50" height="64" rx="7" fill="none" stroke="#1b96ff" stroke-width="2.5" opacity=".75"/>
         <line x1="18" y1="22" x2="50" y2="22" stroke="#1b96ff" stroke-width="2" opacity=".55"/>
         <line x1="18" y1="34" x2="50" y2="34" stroke="#1b96ff" stroke-width="2" opacity=".45"/>
+        <line x1="18" y1="46" x2="44" y2="46" stroke="#1b96ff" stroke-width="2" opacity=".35"/>
         <rect x="38" y="58" width="64" height="36" rx="16" fill="#1b96ff" opacity=".18" stroke="#1b96ff" stroke-width="2.5"/>
         <text x="70" y="82" text-anchor="middle" font-size="14" fill="#58c4ff" font-weight="800">AI draft</text>
       </svg>
@@ -479,6 +507,7 @@ body.presenting .ico-enter{display:none}body.presenting .ico-exit{display:inline
   </div>
 </section>
 
+<!-- ════════════════ SLIDE 7: IDP + RENEWAL ════════════════ -->
 <section class="slide" data-slide data-cam-x="-34" data-cam-y="-50">
   <div class="kicker rk r">Pillar 2 · AI in Production — Two Use Cases</div>
   <h2 class="r d1">Where <span class="er">Policy Admin AI</span> Creates Real Value</h2>
@@ -490,8 +519,11 @@ body.presenting .ico-enter{display:none}body.presenting .ico-exit{display:inline
         <svg width="100%" viewBox="0 0 440 64" fill="none">
           <rect x="2" y="8" width="52" height="48" rx="7" fill="var(--ink4)" stroke="#5b6883" stroke-width="1.5"/>
           <text x="28" y="28" text-anchor="middle" font-size="9" fill="var(--faint)">PDF</text>
+          <line x1="10" y1="36" x2="46" y2="36" stroke="#5b6883" stroke-width="1" opacity=".5"/>
+          <line x1="10" y1="44" x2="40" y2="44" stroke="#5b6883" stroke-width="1" opacity=".38"/>
           <rect x="58" y="14" width="46" height="36" rx="7" fill="var(--ink4)" stroke="#5b6883" stroke-width="1.5"/>
           <text x="81" y="30" text-anchor="middle" font-size="9" fill="var(--faint)">Email</text>
+          <line x1="65" y1="38" x2="98" y2="38" stroke="#5b6883" stroke-width="1" opacity=".4"/>
           <rect x="108" y="18" width="48" height="32" rx="7" fill="var(--ink4)" stroke="#5b6883" stroke-width="1.5"/>
           <text x="132" y="34" text-anchor="middle" font-size="9" fill="var(--faint)">Form</text>
           <path d="M28 56 Q28 66 170 32" stroke="#38d39f" stroke-width="1.8" stroke-dasharray="4 2.5" opacity=".6"/>
@@ -572,6 +604,7 @@ body.presenting .ico-enter{display:none}body.presenting .ico-exit{display:inline
   </div>
 </section>
 
+<!-- ════════════════ SLIDE 8: PILLAR 3 INTRO ════════════════ -->
 <section class="slide" data-slide data-cam-x="-40" data-cam-y="-30">
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:4vw;align-items:center;height:100%">
     <div>
@@ -611,6 +644,7 @@ body.presenting .ico-enter{display:none}body.presenting .ico-exit{display:inline
   </div>
 </section>
 
+<!-- ════════════════ SLIDE 9: PENDO → GEARSET → JIRA ════════════════ -->
 <section class="slide" data-slide data-cam-x="30" data-cam-y="-58">
   <div class="kicker ik r">Pillar 3 · The Real Tool Chain</div>
   <h2 class="r d1">Pendo → Gearset → Jira: <span class="ei">Connected by AI</span></h2>
@@ -671,6 +705,7 @@ body.presenting .ico-enter{display:none}body.presenting .ico-exit{display:inline
   </div>
 </section>
 
+<!-- ════════════════ SLIDE 10: LOOP CLOSES ════════════════ -->
 <section class="slide" data-slide data-cam-x="-24" data-cam-y="-44">
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:4vw;align-items:center;height:100%">
     <div>
@@ -710,6 +745,7 @@ body.presenting .ico-enter{display:none}body.presenting .ico-exit{display:inline
   </div>
 </section>
 
+<!-- ════════════════ SLIDE 11: CLOSING ════════════════ -->
 <section class="slide" data-slide data-cam-x="14" data-cam-y="-26">
   <div class="kicker r">The Bottom Line</div>
   <div class="r d1" style="font-size:clamp(24px,3.4vw,52px);font-weight:800;line-height:1.22;letter-spacing:-.025em;max-width:28ch">
@@ -760,7 +796,7 @@ body.presenting .ico-enter{display:none}body.presenting .ico-exit{display:inline
   </div>
 </section>
 
-</div>
+</div><!-- .stage -->
 
 <div class="hint">
   <button class="key" onclick="prev()">←</button>
@@ -790,7 +826,7 @@ function prev(){if(state.i>0){state.i--;render();}}
 window.addEventListener("keydown",e=>{if(e.key==="ArrowRight"||e.key===" "||e.key==="Enter"){e.preventDefault();next();}else if(e.key==="ArrowLeft"){e.preventDefault();prev();}else if(e.key==="Home"){state.i=0;render();}else if(e.key==="End"){state.i=slides.length-1;render();}});
 document.getElementById("stage").addEventListener("click",()=>next());
 function isFS(){return !!(document.fullscreenElement||document.webkitFullscreenElement);}
-function togglePresent(){if(!isFS()){const r=document.documentElement.requestFullscreen||document.documentElement.webkitRequestFullscreen;if(r)try{r.call(document.documentElement);}catch(e){}}else{const x=document.exitFullscreen||document.webkitExitFullscreen;if(x)try{x.call(document);}catch(e){}}} 
+function togglePresent(){if(!isFS()){const r=document.documentElement.requestFullscreen||document.documentElement.webkitRequestFullscreen;if(r)try{r.call(document.documentElement);}catch(e){}}else{const x=document.exitFullscreen||document.webkitExitFullscreen;if(x)try{x.call(document);}catch(e){}}}
 document.addEventListener("fullscreenchange",()=>document.body.classList.toggle("presenting",isFS()));
 document.addEventListener("webkitfullscreenchange",()=>document.body.classList.toggle("presenting",isFS()));
 (function(){const q=+(new URLSearchParams(location.search).get("s")||0);if(q>0&&q<slides.length)state.i=q;})();
