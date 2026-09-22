@@ -651,16 +651,26 @@ body.presenting .ico-enter{display:none}body.presenting .ico-exit{display:inline
   <p class="r d2" style="font-size:clamp(14px,1.5vw,18px);color:var(--muted);margin-bottom:2vh;max-width:72ch">Three tools Aflac already uses — bridged by AI into one continuous loop instead of three systems a person manually links.</p>
   <div class="r d3" style="flex:1;min-height:0">
     <svg width="100%" viewBox="0 0 1060 280" style="height:100%;max-height:46vh">
-      <!-- Capture (Pendo) -->
-      <rect x="2" y="10" width="148" height="120" rx="14" fill="var(--ink3)" stroke="#a855f7" stroke-width="2.5" opacity=".92"/>
-      <text x="76" y="38" text-anchor="middle" font-family="ui-monospace,monospace" font-size="12" fill="#a855f7" letter-spacing="2">CAPTURE</text>
-      <rect x="14" y="46" width="124" height="18" rx="5" fill="#a855f7" opacity=".18" stroke="#a855f7" stroke-width="1.5"/>
-      <text x="76" y="60" text-anchor="middle" font-size="14" fill="#c084fc" font-weight="800">Pendo</text>
-      <text x="76" y="88" text-anchor="middle" font-size="13" fill="var(--muted)">Session replays,</text>
-      <text x="76" y="106" text-anchor="middle" font-size="13" fill="var(--muted)">clicks, drop-offs</text>
-      <text x="76" y="143" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" fill="#a855f7" letter-spacing="1.5" opacity=".8">AUTOMATED</text>
-      <path d="M152 68 L168 68" stroke="#a855f7" stroke-width="3" opacity=".7"/>
-      <path d="M166 62 L174 68 L166 74" fill="#a855f7" opacity=".7"/>
+      <!-- SOURCE 1: Pendo -->
+      <rect x="2" y="6" width="148" height="74" rx="14" fill="var(--ink3)" stroke="#a855f7" stroke-width="2.5" opacity=".92"/>
+      <text x="76" y="25" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" fill="#a855f7" letter-spacing="2">SOURCE</text>
+      <rect x="14" y="31" width="124" height="16" rx="5" fill="#a855f7" opacity=".18" stroke="#a855f7" stroke-width="1.5"/>
+      <text x="76" y="44" text-anchor="middle" font-size="13" fill="#c084fc" font-weight="800">Pendo</text>
+      <text x="76" y="60" text-anchor="middle" font-size="11" fill="var(--muted)">Session replays,</text>
+      <text x="76" y="73" text-anchor="middle" font-size="11" fill="var(--muted)">clicks &amp; drop-offs</text>
+      <!-- SOURCE 2: Service Tickets + Feedback -->
+      <rect x="2" y="90" width="148" height="74" rx="14" fill="var(--ink3)" stroke="#a855f7" stroke-width="2.5" opacity=".82"/>
+      <text x="76" y="109" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" fill="#a855f7" letter-spacing="2">SOURCE</text>
+      <rect x="14" y="115" width="124" height="16" rx="5" fill="#a855f7" opacity=".14" stroke="#a855f7" stroke-width="1.5"/>
+      <text x="76" y="128" text-anchor="middle" font-size="12" fill="#c084fc" font-weight="800">Tickets + Feedback</text>
+      <text x="76" y="144" text-anchor="middle" font-size="11" fill="var(--muted)">Support tickets,</text>
+      <text x="76" y="157" text-anchor="middle" font-size="11" fill="var(--muted)">customer feedback</text>
+      <!-- Pendo → Triage (curved diagonal, enters upper half of Triage) -->
+      <path d="M150 43 Q163 43 172 52" stroke="#a855f7" stroke-width="3" opacity=".7" fill="none"/>
+      <path d="M165 45 L173 53 L166 61" fill="#a855f7" opacity=".7"/>
+      <!-- Service Tickets → Triage (curved diagonal, enters lower half of Triage) -->
+      <path d="M150 127 Q163 127 172 86" stroke="#a855f7" stroke-width="3" stroke-dasharray="5 3" opacity=".65" fill="none"/>
+      <path d="M165 93 L173 84 L167 76" fill="#a855f7" opacity=".65"/>
       <!-- Triage (AI Analysis) -->
       <rect x="172" y="10" width="148" height="120" rx="14" fill="var(--ink3)" stroke="#a855f7" stroke-width="2.5" opacity=".87"/>
       <text x="246" y="38" text-anchor="middle" font-family="ui-monospace,monospace" font-size="12" fill="#a855f7" letter-spacing="2">TRIAGE</text>
@@ -722,8 +732,8 @@ body.presenting .ico-enter{display:none}body.presenting .ico-exit{display:inline
       <rect x="856" y="148" width="152" height="30" rx="8" fill="#38d39f" opacity=".18" stroke="#38d39f" stroke-width="2"/>
       <text x="932" y="168" text-anchor="middle" font-size="12" fill="#5ef5c4" font-weight="700">✓ Human approved first</text>
       <!-- Feedback loop -->
-      <path d="M932 178 Q932 226 530 232 Q128 238 128 178" fill="none" stroke="#a855f7" stroke-width="2" stroke-dasharray="8 5" opacity=".4"/>
-      <path d="M130 181 L126 176 L135 176" fill="#a855f7" opacity=".4"/>
+      <path d="M932 178 Q932 226 530 232 Q128 238 76 192" fill="none" stroke="#a855f7" stroke-width="2" stroke-dasharray="8 5" opacity=".4"/>
+      <path d="M72 196 L76 188 L80 196" fill="#a855f7" opacity=".4"/>
       <text x="530" y="252" text-anchor="middle" font-size="12" fill="#a855f7" font-family="ui-monospace,monospace" opacity=".65">fix feeds back into build cycle →</text>
     </svg>
   </div>
